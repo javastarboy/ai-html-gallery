@@ -39,26 +39,26 @@ export default function Footer() {
           </div>
           <div>
             <h3 className="text-base font-semibold text-text-primary mb-3">扫码交流</h3>
-            <div className="flex gap-4">
+            <div className="flex gap-6">
               <div className="flex flex-col items-center">
                 <Image
                   src="https://oss.javastarboy.com/agi/%E5%BE%AE%E4%BF%A1%E4%BA%A4%E6%B5%81%E7%BE%A4.png"
                   alt="微信交流群"
-                  width={80}
-                  height={80}
-                  className="rounded-lg border border-glass-border"
+                  width={100}
+                  height={100}
+                  className="rounded-lg border border-glass-border object-contain bg-white"
                 />
-                <p className="text-tiny text-text-tertiary mt-1">微信交流群</p>
+                <p className="text-tiny text-text-tertiary mt-2">微信交流群</p>
               </div>
               <div className="flex flex-col items-center">
                 <Image
                   src="https://oss.javastarboy.com/agi/AGI%E8%88%B0%E9%95%BF%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.png"
                   alt="公众号"
-                  width={80}
-                  height={80}
-                  className="rounded-lg border border-glass-border"
+                  width={100}
+                  height={100}
+                  className="rounded-lg border border-glass-border object-contain bg-white"
                 />
-                <p className="text-tiny text-text-tertiary mt-1">公众号</p>
+                <p className="text-tiny text-text-tertiary mt-2">公众号</p>
               </div>
             </div>
           </div>
