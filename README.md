@@ -106,8 +106,10 @@ author: AI Assistant
 
 ### Vercel 部署
 
-1. 将代码推送到 GitHub 仓库
-2. 访问 https://vercel.com 导入仓库
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/git/import?repo=https://github.com/javastarboy/ai-html-gallery)
+
+1. 点击上方按钮或访问 https://vercel.com/new/git/import?repo=https://github.com/javastarboy/ai-html-gallery
+2. 导入 GitHub 仓库
 3. 点击 Deploy 即可
 
 ### Git 管理
