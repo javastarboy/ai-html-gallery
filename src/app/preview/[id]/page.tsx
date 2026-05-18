@@ -1,6 +1,6 @@
-import { getHtmlFileById } from "@/lib/files";
-import PreviewClient from "./PreviewClient";
-import { HtmlFile } from "@/types";
+import { getHtmlFileById } from '@/lib/files';
+import PreviewClient from './PreviewClient';
+import { HtmlFile } from '@/types';
 
 interface PageProps {
   params: { id: string };

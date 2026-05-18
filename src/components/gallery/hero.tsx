@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import Input from "@/components/ui/input";
+import Input from '@/components/ui/input';
 
 interface HeroProps {
   totalFiles: number;
@@ -9,12 +9,7 @@ interface HeroProps {
   onSearchChange: (query: string) => void;
 }
 
-export default function Hero({
-  totalFiles,
-  totalSources,
-  searchQuery,
-  onSearchChange,
-}: HeroProps) {
+export default function Hero({ totalFiles, totalSources, searchQuery, onSearchChange }: HeroProps) {
   return (
     <section className="relative py-16 sm:py-24 text-center">
       <div className="absolute inset-0 -z-10">
@@ -46,11 +41,12 @@ export default function Hero({
             variant="search"
             placeholder="搜索标题、描述、标签..."
             value={searchQuery}
-            onChange={(e) => onSearchChange(e.target.value)}
+            onChange={e => onSearchChange(e.target.value)}
             className="h-12 text-base"
           />
           <p className="mt-2 text-tiny text-text-tertiary">
-            按 <kbd className="px-2 py-0.5 bg-surface-800 rounded text-xs">Ctrl</kbd> + <kbd className="px-2 py-0.5 bg-surface-800 rounded text-xs">K</kbd> 快速搜索
+            按 <kbd className="px-2 py-0.5 bg-surface-800 rounded text-xs">Ctrl</kbd> +{' '}
+            <kbd className="px-2 py-0.5 bg-surface-800 rounded text-xs">K</kbd> 快速搜索
           </p>
         </div>
       </div>

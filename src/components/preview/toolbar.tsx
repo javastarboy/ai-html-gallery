@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Button from "@/components/ui/button";
-import { HtmlFile } from "@/types";
-import { ArrowLeft, Share2, Maximize2, Minimize2, Settings } from "lucide-react";
-import { useState } from "react";
+import Link from 'next/link';
+import Button from '@/components/ui/button';
+import { HtmlFile } from '@/types';
+import { ArrowLeft, Share2, Maximize2, Minimize2, Settings } from 'lucide-react';
+import { useState } from 'react';
 
 interface ToolbarProps {
   file: HtmlFile;
@@ -22,7 +22,7 @@ export default function Toolbar({ file, isFullscreen, onToggleFullscreen }: Tool
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch (err) {
-      console.error("Failed to copy:", err);
+      console.error('Failed to copy:', err);
     }
   };
 
@@ -39,15 +39,13 @@ export default function Toolbar({ file, isFullscreen, onToggleFullscreen }: Tool
 
           <div className="h-6 w-px bg-glass-border hidden sm:block" />
 
-          <h2 className="text-base font-semibold text-text-primary line-clamp-1">
-            {file.title}
-          </h2>
+          <h2 className="text-base font-semibold text-text-primary line-clamp-1">{file.title}</h2>
         </div>
 
         <div className="flex items-center gap-2">
           <Button variant="ghost" size="sm" onClick={handleShare}>
             <Share2 className="w-4 h-4 mr-2" />
-            <span className="hidden sm:inline">{copied ? "已复制!" : "分享"}</span>
+            <span className="hidden sm:inline">{copied ? '已复制!' : '分享'}</span>
           </Button>
 
           <Button variant="ghost" size="sm" onClick={onToggleFullscreen}>

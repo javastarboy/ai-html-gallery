@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Card from "@/components/ui/card";
-import Badge from "@/components/ui/badge";
-import Button from "@/components/ui/button";
-import { HtmlFile } from "@/types";
-import { formatDate, getSourceInfo } from "@/lib/utils";
-import { Eye, ExternalLink, Calendar, FileText } from "lucide-react";
+import Link from 'next/link';
+import Card from '@/components/ui/card';
+import Badge from '@/components/ui/badge';
+import Button from '@/components/ui/button';
+import { HtmlFile } from '@/types';
+import { formatDate, getSourceInfo } from '@/lib/utils';
+import { Eye, ExternalLink, Calendar, FileText } from 'lucide-react';
 
 interface FileCardProps {
   file: HtmlFile;
@@ -48,21 +48,17 @@ export default function FileCard({ file }: FileCardProps) {
         </h3>
 
         {file.description && (
-          <p className="text-small text-text-secondary mb-3 line-clamp-2">
-            {file.description}
-          </p>
+          <p className="text-small text-text-secondary mb-3 line-clamp-2">{file.description}</p>
         )}
 
         {file.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 mb-3">
-            {file.tags.slice(0, 3).map((tag) => (
+            {file.tags.slice(0, 3).map(tag => (
               <Badge key={tag} variant="default">
                 {tag}
               </Badge>
             ))}
-            {file.tags.length > 3 && (
-              <Badge variant="default">+{file.tags.length - 3}</Badge>
-            )}
+            {file.tags.length > 3 && <Badge variant="default">+{file.tags.length - 3}</Badge>}
           </div>
         )}
 

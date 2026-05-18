@@ -1,12 +1,20 @@
-"use client";
+'use client';
 
-import { HtmlFile } from "@/types";
-import { formatDate, formatFileSize, getSourceInfo } from "@/lib/utils";
-import Badge from "@/components/ui/badge";
-import Button from "@/components/ui/button";
-import { FileText, Calendar, HardDrive, Tag, ExternalLink, ChevronRight, ChevronLeft } from "lucide-react";
-import { useState } from "react";
-import { cn } from "@/lib/utils";
+import { HtmlFile } from '@/types';
+import { formatDate, formatFileSize, getSourceInfo } from '@/lib/utils';
+import Badge from '@/components/ui/badge';
+import Button from '@/components/ui/button';
+import {
+  FileText,
+  Calendar,
+  HardDrive,
+  Tag,
+  ExternalLink,
+  ChevronRight,
+  ChevronLeft,
+} from 'lucide-react';
+import { useState } from 'react';
+import { cn } from '@/lib/utils';
 
 interface MetadataPanelProps {
   file: HtmlFile;
@@ -19,8 +27,8 @@ export default function MetadataPanel({ file }: MetadataPanelProps) {
   return (
     <aside
       className={cn(
-        "glass-card rounded-lg transition-all duration-slow overflow-hidden",
-        isCollapsed ? "w-12" : "w-full sm:w-72"
+        'glass-card rounded-lg transition-all duration-slow overflow-hidden',
+        isCollapsed ? 'w-12' : 'w-full sm:w-72'
       )}
     >
       <div className="p-4 border-b border-glass-border flex items-center justify-between">
@@ -69,7 +77,7 @@ export default function MetadataPanel({ file }: MetadataPanelProps) {
                 标签
               </label>
               <div className="flex flex-wrap gap-2">
-                {file.tags.map((tag) => (
+                {file.tags.map(tag => (
                   <Badge key={tag} variant="default">
                     {tag}
                   </Badge>
@@ -105,12 +113,7 @@ export default function MetadataPanel({ file }: MetadataPanelProps) {
           </div>
 
           <div className="pt-4 border-t border-glass-border">
-            <a
-              href={file.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="block"
-            >
+            <a href={file.url} target="_blank" rel="noopener noreferrer" className="block">
               <Button variant="secondary" className="w-full">
                 <ExternalLink className="w-4 h-4 mr-2" />
                 查看源文件

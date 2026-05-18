@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useState } from "react";
-import { Loader2 } from "lucide-react";
+import { useState } from 'react';
+import { Loader2 } from 'lucide-react';
 
 interface IframeViewerProps {
   url: string;
@@ -45,7 +45,9 @@ export default function IframeViewer({ url, title, isFullscreen = false }: Ifram
   }
 
   return (
-    <div className={`relative bg-surface-900/50 rounded-lg overflow-hidden ${isFullscreen ? "h-[calc(100vh-3.5rem)]" : "h-[600px]"}`}>
+    <div
+      className={`relative bg-surface-900/50 rounded-lg overflow-hidden ${isFullscreen ? 'h-[calc(100vh-3.5rem)]' : 'h-[600px]'}`}
+    >
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center bg-surface-900/80 backdrop-blur-sm z-10">
           <div className="flex flex-col items-center gap-3">

@@ -1,8 +1,8 @@
-"use client";
+'use client';
 
-import { HtmlFile } from "@/types";
-import FileCard from "./file-card";
-import { FileText } from "lucide-react";
+import { HtmlFile } from '@/types';
+import FileCard from './file-card';
+import { FileText } from 'lucide-react';
 
 interface FileGridProps {
   files: HtmlFile[];

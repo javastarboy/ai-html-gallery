@@ -12,7 +12,7 @@ export async function getAllHtmlFiles(): Promise<HtmlFile[]> {
     const htmlFiles = files.filter(f => String(f).endsWith('.html'));
 
     const parsedFiles = await Promise.all(
-      htmlFiles.map(async (file) => {
+      htmlFiles.map(async file => {
         const filePath = path.join(FILES_DIRECTORY, String(file));
         const content = await fs.readFile(filePath, 'utf-8');
         const stats = await fs.stat(filePath);
@@ -38,8 +38,8 @@ export async function getAllHtmlFiles(): Promise<HtmlFile[]> {
       })
     );
 
-    return parsedFiles.sort((a, b) =>
-      new Date(b.created).getTime() - new Date(a.created).getTime()
+    return parsedFiles.sort(
+      (a, b) => new Date(b.created).getTime() - new Date(a.created).getTime()
     );
   } catch (error) {
     console.error('Error reading files:', error);
@@ -91,11 +91,12 @@ export async function searchFiles(query: string): Promise<HtmlFile[]> {
   const files = await getAllHtmlFiles();
   const lowerQuery = query.toLowerCase();
 
-  return files.filter(file =>
-    file.title.toLowerCase().includes(lowerQuery) ||
-    file.description?.toLowerCase().includes(lowerQuery) ||
-    file.tags.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
-    file.filename.toLowerCase().includes(lowerQuery)
+  return files.filter(
+    file =>
+      file.title.toLowerCase().includes(lowerQuery) ||
+      file.description?.toLowerCase().includes(lowerQuery) ||
+      file.tags.some(tag => tag.toLowerCase().includes(lowerQuery)) ||
+      file.filename.toLowerCase().includes(lowerQuery)
   );
 }
 

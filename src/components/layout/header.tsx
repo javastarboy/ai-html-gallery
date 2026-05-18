@@ -1,16 +1,16 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import Input from "@/components/ui/input";
-import Button from "@/components/ui/button";
-import { Search, Github, Plus } from "lucide-react";
+import Link from 'next/link';
+import Input from '@/components/ui/input';
+import Button from '@/components/ui/button';
+import { Search, Github, Plus } from 'lucide-react';
 
 interface HeaderProps {
   searchQuery?: string;
   onSearchChange?: (query: string) => void;
 }
 
-export default function Header({ searchQuery = "", onSearchChange }: HeaderProps) {
+export default function Header({ searchQuery = '', onSearchChange }: HeaderProps) {
   return (
     <header className="sticky top-0 z-50 glass-card border-t-0 border-l-0 border-r-0">
       <div className="container mx-auto px-4 h-16 flex items-center justify-between gap-4">
@@ -31,7 +31,7 @@ export default function Header({ searchQuery = "", onSearchChange }: HeaderProps
             variant="search"
             placeholder="搜索文件... (Ctrl+K)"
             value={searchQuery}
-            onChange={(e) => onSearchChange?.(e.target.value)}
+            onChange={e => onSearchChange?.(e.target.value)}
             className="hidden sm:block"
           />
         </div>

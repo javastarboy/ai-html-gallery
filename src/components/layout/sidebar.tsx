@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { cn } from "@/lib/utils";
-import { SOURCES, Source } from "@/types";
-import Badge from "@/components/ui/badge";
-import { ChevronDown, Filter } from "lucide-react";
-import { useState } from "react";
+import { cn } from '@/lib/utils';
+import { SOURCES, Source } from '@/types';
+import Badge from '@/components/ui/badge';
+import { ChevronDown, Filter } from 'lucide-react';
+import { useState } from 'react';
 
 interface SidebarProps {
   selectedSources: Source[];
@@ -27,7 +27,7 @@ export default function Sidebar({
 
   const toggleSource = (source: Source) => {
     if (selectedSources.includes(source)) {
-      onSourceChange(selectedSources.filter((s) => s !== source));
+      onSourceChange(selectedSources.filter(s => s !== source));
     } else {
       onSourceChange([...selectedSources, source]);
     }
@@ -35,7 +35,7 @@ export default function Sidebar({
 
   const toggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
-      onTagChange(selectedTags.filter((t) => t !== tag));
+      onTagChange(selectedTags.filter(t => t !== tag));
     } else {
       onTagChange([...selectedTags, tag]);
     }
@@ -44,9 +44,9 @@ export default function Sidebar({
   return (
     <aside
       className={cn(
-        "glass-card rounded-lg p-4 transition-all duration-slow",
-        "w-full lg:w-64 lg:shrink-0",
-        isExpanded ? "h-auto" : "h-16 overflow-hidden"
+        'glass-card rounded-lg p-4 transition-all duration-slow',
+        'w-full lg:w-64 lg:shrink-0',
+        isExpanded ? 'h-auto' : 'h-16 overflow-hidden'
       )}
     >
       <div className="flex items-center justify-between mb-4">
@@ -60,8 +60,8 @@ export default function Sidebar({
         >
           <ChevronDown
             className={cn(
-              "w-5 h-5 text-text-secondary transition-transform",
-              isExpanded ? "rotate-180" : ""
+              'w-5 h-5 text-text-secondary transition-transform',
+              isExpanded ? 'rotate-180' : ''
             )}
           />
         </button>
@@ -74,15 +74,15 @@ export default function Sidebar({
               来源 ({selectedSources.length}/{SOURCES.length})
             </h3>
             <div className="space-y-2">
-              {SOURCES.map((source) => (
+              {SOURCES.map(source => (
                 <button
                   key={source.id}
                   onClick={() => toggleSource(source.id)}
                   className={cn(
-                    "w-full flex items-center gap-3 p-2 rounded-md transition-all",
+                    'w-full flex items-center gap-3 p-2 rounded-md transition-all',
                     selectedSources.includes(source.id)
-                      ? "bg-primary/10 border border-primary/30"
-                      : "hover:bg-glass-bg border border-transparent"
+                      ? 'bg-primary/10 border border-primary/30'
+                      : 'hover:bg-glass-bg border border-transparent'
                   )}
                 >
                   <span className="text-lg">{source.icon}</span>
@@ -101,10 +101,10 @@ export default function Sidebar({
                 标签 ({selectedTags.length}/{tags.length})
               </h3>
               <div className="flex flex-wrap gap-2">
-                {tags.map((tag) => (
+                {tags.map(tag => (
                   <Badge
                     key={tag}
-                    variant={selectedTags.includes(tag) ? "count" : "default"}
+                    variant={selectedTags.includes(tag) ? 'count' : 'default'}
                     className="cursor-pointer hover:scale-105 transition-transform"
                     onClick={() => toggleTag(tag)}
                   >
@@ -116,9 +116,7 @@ export default function Sidebar({
           )}
 
           <div className="pt-4 border-t border-glass-border">
-            <p className="text-tiny text-text-tertiary">
-              共 {totalFiles} 个文件
-            </p>
+            <p className="text-tiny text-text-tertiary">共 {totalFiles} 个文件</p>
           </div>
         </div>
       )}

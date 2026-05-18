@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { useState, useMemo } from "react";
-import Header from "@/components/layout/header";
-import Footer from "@/components/layout/footer";
-import Hero from "@/components/gallery/hero";
-import FilterBar from "@/components/gallery/filter-bar";
-import FileGrid from "@/components/gallery/file-grid";
-import Sidebar from "@/components/layout/sidebar";
-import { HtmlFile, Source, SortOption } from "@/types";
+import { useState, useMemo } from 'react';
+import Header from '@/components/layout/header';
+import Footer from '@/components/layout/footer';
+import Hero from '@/components/gallery/hero';
+import FilterBar from '@/components/gallery/filter-bar';
+import FileGrid from '@/components/gallery/file-grid';
+import Sidebar from '@/components/layout/sidebar';
+import { HtmlFile, Source, SortOption } from '@/types';
 
 interface HomeClientProps {
   initialFiles: HtmlFile[];
@@ -15,10 +15,10 @@ interface HomeClientProps {
 }
 
 export default function HomeClient({ initialFiles, initialTags }: HomeClientProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState('');
   const [selectedSources, setSelectedSources] = useState<Source[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [sortOption, setSortOption] = useState<SortOption>("newest");
+  const [sortOption, setSortOption] = useState<SortOption>('newest');
   const [showSidebar, setShowSidebar] = useState(true);
 
   const filteredFiles = useMemo(() => {
@@ -27,33 +27,31 @@ export default function HomeClient({ initialFiles, initialTags }: HomeClientProp
     if (searchQuery) {
       const query = searchQuery.toLowerCase();
       result = result.filter(
-        (file) =>
+        file =>
           file.title.toLowerCase().includes(query) ||
           file.description?.toLowerCase().includes(query) ||
-          file.tags.some((tag) => tag.toLowerCase().includes(query)) ||
+          file.tags.some(tag => tag.toLowerCase().includes(query)) ||
           file.filename.toLowerCase().includes(query)
       );
     }
 
     if (selectedSources.length > 0) {
-      result = result.filter((file) => selectedSources.includes(file.source as Source));
+      result = result.filter(file => selectedSources.includes(file.source as Source));
     }
 
     if (selectedTags.length > 0) {
-      result = result.filter((file) =>
-        selectedTags.some((tag) => file.tags.includes(tag))
-      );
+      result = result.filter(file => selectedTags.some(tag => file.tags.includes(tag)));
     }
 
     result.sort((a, b) => {
       switch (sortOption) {
-        case "newest":
+        case 'newest':
           return new Date(b.created).getTime() - new Date(a.created).getTime();
-        case "oldest":
+        case 'oldest':
           return new Date(a.created).getTime() - new Date(b.created).getTime();
-        case "name-asc":
+        case 'name-asc':
           return a.title.localeCompare(b.title);
-        case "name-desc":
+        case 'name-desc':
           return b.title.localeCompare(a.title);
         default:
           return 0;
@@ -63,7 +61,7 @@ export default function HomeClient({ initialFiles, initialTags }: HomeClientProp
     return result;
   }, [initialFiles, searchQuery, selectedSources, selectedTags, sortOption]);
 
-  const uniqueSources = Array.from(new Set(initialFiles.map((f) => f.source)));
+  const uniqueSources = Array.from(new Set(initialFiles.map(f => f.source)));
 
   return (
     <div className="min-h-screen flex flex-col">
