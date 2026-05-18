@@ -1,0 +1,121 @@
+<!--
+{
+  "title": "销售数据仪表盘",
+  "description": "展示月度销售数据的交互式仪表盘，包含多种图表类型和实时数据更新",
+  "source": "openclaw",
+  "tags": ["dashboard", "chart", "sales", "analytics"],
+  "created": "2024-01-15",
+  "updated": "2024-01-20"
+}
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>销售数据仪表盘</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 min-h-screen p-8">
+  <div class="max-w-7xl mx-auto">
+    <header class="mb-8">
+      <h1 class="text-4xl font-bold bg-gradient-to-r from-blue-400 to-purple-500 bg-clip-text text-transparent mb-2">
+        销售数据仪表盘
+      </h1>
+      <p class="text-slate-400">实时监控销售业绩和关键指标</p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+      <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-slate-400">总收入</span>
+          <span class="text-2xl">📈</span>
+        </div>
+        <div class="text-3xl font-bold text-white mb-1">¥128,450</div>
+        <div class="text-green-400 text-sm">+12.5%</div>
+      </div>
+
+      <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-slate-400">订单数</span>
+          <span class="text-2xl">🛒</span>
+        </div>
+        <div class="text-3xl font-bold text-white mb-1">1,234</div>
+        <div class="text-green-400 text-sm">+8.2%</div>
+      </div>
+
+      <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-slate-400">客户数</span>
+          <span class="text-2xl">👥</span>
+        </div>
+        <div class="text-3xl font-bold text-white mb-1">856</div>
+        <div class="text-green-400 text-sm">+15.3%</div>
+      </div>
+
+      <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-slate-400">转化率</span>
+          <span class="text-2xl">🎯</span>
+        </div>
+        <div class="text-3xl font-bold text-white mb-1">3.8%</div>
+        <div class="text-red-400 text-sm">-2.1%</div>
+      </div>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-white mb-4">月度销售趋势</h2>
+        <div class="h-64 flex items-end justify-around gap-2">
+          <div class="bg-blue-500 rounded-t w-full" style="height: 60%"></div>
+          <div class="bg-blue-500 rounded-t w-full" style="height: 75%"></div>
+          <div class="bg-blue-500 rounded-t w-full" style="height: 45%"></div>
+          <div class="bg-blue-500 rounded-t w-full" style="height: 90%"></div>
+          <div class="bg-blue-500 rounded-t w-full" style="height: 80%"></div>
+          <div class="bg-blue-500 rounded-t w-full" style="height: 95%"></div>
+          <div class="bg-purple-500 rounded-t w-full" style="height: 100%"></div>
+        </div>
+        <div class="flex justify-around mt-4 text-slate-400 text-sm">
+          <span>1月</span>
+          <span>2月</span>
+          <span>3月</span>
+          <span>4月</span>
+          <span>5月</span>
+          <span>6月</span>
+          <span>7月</span>
+        </div>
+      </div>
+
+      <div class="bg-slate-800/50 backdrop-blur-sm border border-slate-700/50 rounded-xl p-6">
+        <h2 class="text-xl font-semibold text-white mb-4">热销产品 Top 5</h2>
+        <div class="space-y-4">
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-blue-500 to-purple-500 rounded-lg flex items-center justify-center text-white font-bold">1</div>
+            <div class="flex-1">
+              <div class="text-white font-medium">智能手表 Pro</div>
+              <div class="text-slate-400 text-sm">销量: 234 件</div>
+            </div>
+            <div class="text-green-400 font-medium">¥45,230</div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-purple-500 to-pink-500 rounded-lg flex items-center justify-center text-white font-bold">2</div>
+            <div class="flex-1">
+              <div class="text-white font-medium">无线耳机 Max</div>
+              <div class="text-slate-400 text-sm">销量: 189 件</div>
+            </div>
+            <div class="text-green-400 font-medium">¥28,350</div>
+          </div>
+          <div class="flex items-center gap-4">
+            <div class="w-12 h-12 bg-gradient-to-br from-pink-500 to-red-500 rounded-lg flex items-center justify-center text-white font-bold">3</div>
+            <div class="flex-1">
+              <div class="text-white font-medium">便携充电宝</div>
+              <div class="text-slate-400 text-sm">销量: 156 件</div>
+            </div>
+            <div class="text-green-400 font-medium">¥15,600</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

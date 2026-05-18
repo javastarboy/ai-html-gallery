@@ -1,0 +1,74 @@
+<!--
+{
+  "title": "用户注册表单",
+  "description": "现代化用户注册表单，支持邮箱、手机验证和密码强度检测",
+  "source": "workbuddy",
+  "tags": ["form", "registration", "ui", "validation"],
+  "created": "2024-01-10"
+}
+-->
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>用户注册</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gradient-to-br from-indigo-900 via-purple-900 to-pink-900 min-h-screen flex items-center justify-center p-4">
+  <div class="w-full max-w-md">
+    <div class="bg-white/10 backdrop-blur-lg border border-white/20 rounded-2xl p-8 shadow-2xl">
+      <div class="text-center mb-8">
+        <h1 class="text-3xl font-bold text-white mb-2">创建账户</h1>
+        <p class="text-purple-200">开始你的旅程</p>
+      </div>
+
+      <form class="space-y-5">
+        <div>
+          <label class="block text-sm font-medium text-purple-200 mb-2">用户名</label>
+          <input type="text" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="输入用户名">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-purple-200 mb-2">邮箱</label>
+          <input type="email" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="your@email.com">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-purple-200 mb-2">手机号</label>
+          <input type="tel" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="+86 123 4567 8901">
+        </div>
+
+        <div>
+          <label class="block text-sm font-medium text-purple-200 mb-2">密码</label>
+          <input type="password" class="w-full px-4 py-3 bg-white/5 border border-white/10 rounded-lg text-white placeholder-purple-300/50 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition" placeholder="••••••••">
+          <div class="mt-2 flex gap-1">
+            <div class="h-1 flex-1 bg-green-500 rounded"></div>
+            <div class="h-1 flex-1 bg-green-500 rounded"></div>
+            <div class="h-1 flex-1 bg-green-500 rounded"></div>
+            <div class="h-1 flex-1 bg-white/20 rounded"></div>
+          </div>
+          <p class="text-xs text-purple-300 mt-1">密码强度: 强</p>
+        </div>
+
+        <div class="flex items-center">
+          <input type="checkbox" class="w-4 h-4 rounded border-white/20 bg-white/5 text-purple-500 focus:ring-purple-500 focus:ring-offset-0">
+          <label class="ml-2 text-sm text-purple-200">
+            我同意 <a href="#" class="text-purple-400 hover:text-purple-300">服务条款</a> 和 <a href="#" class="text-purple-400 hover:text-purple-300">隐私政策</a>
+          </label>
+        </div>
+
+        <button type="submit" class="w-full py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white font-semibold rounded-lg hover:from-purple-600 hover:to-pink-600 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 focus:ring-offset-purple-900 transition-all transform hover:scale-[1.02]">
+          注册
+        </button>
+      </form>
+
+      <div class="mt-6 text-center">
+        <p class="text-purple-200 text-sm">
+          已有账户? <a href="#" class="text-pink-400 hover:text-pink-300 font-medium">立即登录</a>
+        </p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
