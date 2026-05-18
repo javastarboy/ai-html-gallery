@@ -126,6 +126,18 @@ npm run lint      # ESLint 检查
 npm run format    # Prettier 格式化
 ```
 
+## 联系我
+
+- **微信**：LHYYH001
+- **博客主页**：[80万字AI大模型知识库](https://www.yuque.com/lhyysh)
+- **AI工具导航站**：[https://tools.lhagi.com/](https://tools.lhagi.com/)
+
+### 扫码交流
+
+| 微信交流群 | 公众号 |
+|-----------|--------|
+| ![微信交流群](https://oss.javastarboy.com/agi/%E5%BE%AE%E4%BF%A1%E4%BA%A4%E6%B5%81%E7%BE%A4.png) | ![公众号](https://oss.javastarboy.com/agi/AGI%E8%88%B0%E9%95%BF%E5%BE%AE%E4%BF%A1%E8%AE%A2%E9%98%85%E5%8F%B7.png) |
+
 ## 许可证
 
 MIT
