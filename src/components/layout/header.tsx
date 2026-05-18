@@ -37,11 +37,21 @@ export default function Header({ searchQuery = '', onSearchChange }: HeaderProps
         </div>
 
         <div className="flex items-center gap-2">
-          <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
-            <Github className="w-4 h-4" />
-            <span className="hidden lg:inline">GitHub</span>
-          </Button>
-          <Button variant="primary" size="sm">
+          <Link
+            href="https://github.com/javastarboy/ai-html-gallery"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <Button variant="ghost" size="sm" className="hidden sm:inline-flex">
+              <Github className="w-4 h-4" />
+              <span className="hidden lg:inline">GitHub</span>
+            </Button>
+          </Link>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => alert('请在 public/files 目录下添加 HTML 文件')}
+          >
             <Plus className="w-4 h-4" />
             <span className="hidden sm:inline">添加文件</span>
           </Button>
