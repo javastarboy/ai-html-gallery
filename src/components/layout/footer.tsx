@@ -9,12 +9,12 @@ export default function Footer() {
         <div className="flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="text-center sm:text-left">
             <p className="text-small text-text-secondary">
-              © 2024 AI HTML Gallery. 使用 Next.js + TailwindCSS 构建
+              © 2026 AI HTML Gallery. 使用 Next.js + TailwindCSS 构建
             </p>
           </div>
           <div className="flex items-center gap-4">
             <Link
-              href="https://github.com"
+              href="https://github.com/javastarboy/ai-html-gallery"
               target="_blank"
               rel="noopener noreferrer"
               className="text-small text-text-tertiary hover:text-text-primary transition-colors"
@@ -22,7 +22,7 @@ export default function Footer() {
               GitHub
             </Link>
             <Link
-              href="https://vercel.com"
+              href="https://vercel.com/new/git/import?repo=https://github.com/javastarboy/ai-html-gallery"
               target="_blank"
               rel="noopener noreferrer"
               className="text-small text-text-tertiary hover:text-text-primary transition-colors"
