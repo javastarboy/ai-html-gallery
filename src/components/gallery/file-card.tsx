@@ -4,9 +4,10 @@ import Link from 'next/link';
 import Card from '@/components/ui/card';
 import Badge from '@/components/ui/badge';
 import Button from '@/components/ui/button';
+import ThumbnailPreview from '@/components/gallery/thumbnail-preview';
 import { HtmlFile } from '@/types';
 import { formatDate, getSourceInfo } from '@/lib/utils';
-import { Eye, ExternalLink, Calendar, FileText, Sparkles } from 'lucide-react';
+import { Eye, ExternalLink, Calendar, Sparkles } from 'lucide-react';
 
 interface FileCardProps {
   file: HtmlFile;
@@ -20,12 +21,7 @@ export default function FileCard({ file, index = 0 }: FileCardProps) {
     <div className="animate-card-enter" style={{ animationDelay: `${index * 60}ms`, opacity: 0 }}>
       <Card className="group overflow-hidden card-shine">
         <div className="aspect-video bg-surface-800/50 relative overflow-hidden">
-          <div className="absolute inset-0 flex items-center justify-center bg-gradient-to-br from-surface-800 to-surface-900">
-            <div className="relative">
-              <FileText className="w-10 h-10 text-surface-600/50" />
-              <Sparkles className="w-4 h-4 text-primary/40 absolute -top-1 -right-1 animate-pulse" />
-            </div>
-          </div>
+          <ThumbnailPreview url={file.url} title={file.title} />
 
           <div className="absolute inset-0 bg-gradient-to-t from-surface-900/80 via-surface-900/20 to-transparent" />
 
