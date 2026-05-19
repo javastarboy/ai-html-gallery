@@ -1,10 +1,9 @@
 'use client';
 
 import { cn } from '@/lib/utils';
-import { Source, SortOption } from '@/types';
-import { SOURCES } from '@/types';
+import { Source, SortOption, SOURCES } from '@/types';
 import Button from '@/components/ui/button';
-import { ArrowUpDown, ArrowUp, ArrowDown, SortAsc } from 'lucide-react';
+import { ArrowUpDown, ArrowUp, ArrowDown, SortAsc, SlidersHorizontal } from 'lucide-react';
 import { useState } from 'react';
 
 interface FilterBarProps {
@@ -44,8 +43,8 @@ export default function FilterBar({
   const currentSort = sortOptions.find(opt => opt.value === sortOption);
 
   return (
-    <div className="glass-card p-4 mb-6">
-      <div className="flex flex-wrap items-center justify-between gap-4">
+    <div className="glass-card p-3 mb-5 rounded-xl">
+      <div className="flex flex-wrap items-center justify-between gap-3">
         <div className="flex items-center gap-2 flex-wrap">
           {onToggleFilters && (
             <Button
@@ -53,20 +52,21 @@ export default function FilterBar({
               size="sm"
               onClick={onToggleFilters}
             >
+              <SlidersHorizontal className="w-4 h-4 mr-1.5" />
               筛选
             </Button>
           )}
 
-          <div className="flex items-center gap-2 flex-wrap">
+          <div className="flex items-center gap-1.5 flex-wrap">
             {SOURCES.map(source => (
               <button
                 key={source.id}
                 onClick={() => toggleSource(source.id)}
                 className={cn(
-                  'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-small transition-all border',
+                  'inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-small transition-all duration-normal border cursor-pointer',
                   selectedSources.includes(source.id)
-                    ? 'text-white border-transparent'
-                    : 'text-text-secondary border-glass-border hover:border-white/20 bg-glass-bg'
+                    ? 'text-white border-transparent shadow-md'
+                    : 'text-text-secondary border-glass-border hover:border-white/20 hover:text-text-primary bg-glass-bg'
                 )}
                 style={
                   selectedSources.includes(source.id)
@@ -84,13 +84,13 @@ export default function FilterBar({
         <div className="relative">
           <Button variant="ghost" size="sm" onClick={() => setShowSortMenu(!showSortMenu)}>
             <ArrowUpDown className="w-4 h-4" />
-            <span className="hidden sm:inline ml-2">{currentSort?.label}</span>
+            <span className="hidden sm:inline ml-1.5">{currentSort?.label}</span>
           </Button>
 
           {showSortMenu && (
             <>
               <div className="fixed inset-0 z-10" onClick={() => setShowSortMenu(false)} />
-              <div className="absolute right-0 mt-2 w-48 glass-card rounded-lg shadow-xl z-20 py-2">
+              <div className="absolute right-0 mt-2 w-48 glass-card rounded-xl shadow-xl z-20 py-2 neon-glow">
                 {sortOptions.map(option => (
                   <button
                     key={option.value}
@@ -99,7 +99,7 @@ export default function FilterBar({
                       setShowSortMenu(false);
                     }}
                     className={cn(
-                      'w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors',
+                      'w-full flex items-center gap-3 px-4 py-2 text-sm transition-colors duration-normal',
                       sortOption === option.value
                         ? 'text-primary bg-primary/10'
                         : 'text-text-secondary hover:text-text-primary hover:bg-glass-bg'

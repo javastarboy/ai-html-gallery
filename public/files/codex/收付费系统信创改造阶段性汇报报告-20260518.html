@@ -1,0 +1,1302 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ITAI Agent Skills — 信创改造智能体平台 | 产品白皮书</title>
+<style>
+:root {
+  --bg-deep: #080c17;
+  --bg-primary: #0d1323;
+  --bg-card: #131b2e;
+  --bg-card-hover: #1a2540;
+  --text-primary: #e8ecf2;
+  --text-secondary: #8896b4;
+  --text-muted: #55607a;
+  --accent-blue: #3b82f6;
+  --accent-cyan: #06b6d4;
+  --accent-teal: #14b8a6;
+  --accent-amber: #f59e0b;
+  --accent-rose: #f43f5e;
+  --accent-violet: #8b5cf6;
+  --accent-emerald: #10b981;
+  --accent-orange: #f97316;
+  --gradient-hero: linear-gradient(135deg, #0a1628 0%, #0d1f3c 30%, #132544 60%, #0a1628 100%);
+  --gradient-blue: linear-gradient(135deg, #3b82f6, #06b6d4);
+  --gradient-violet: linear-gradient(135deg, #8b5cf6, #a855f7);
+  --gradient-warm: linear-gradient(135deg, #f59e0b, #f97316);
+  --gradient-card: linear-gradient(145deg, rgba(19, 27, 46, 0.9), rgba(13, 19, 35, 0.95));
+  --border-subtle: rgba(255,255,255,0.06);
+  --border-medium: rgba(255,255,255,0.1);
+  --border-accent: rgba(59,130,246,0.3);
+  --shadow-glow: 0 0 40px rgba(59,130,246,0.15);
+  --shadow-card: 0 4px 24px rgba(0,0,0,0.3);
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 20px;
+  --radius-xl: 28px;
+  --font-display: "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  --font-mono: "SF Mono", "Cascadia Code", "Fira Code", "Menlo", monospace;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+body {
+  font-family: var(--font-display);
+  background: var(--bg-deep);
+  color: var(--text-primary);
+  line-height: 1.7;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* === PARTICLE BACKGROUND === */
+#particles-canvas {
+  position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+  pointer-events: none; z-index: 0; opacity: 0.4;
+}
+
+.container { max-width: 1200px; margin: 0 auto; padding: 0 24px; position: relative; z-index: 1; }
+
+/* === HERO SECTION === */
+.hero {
+  position: relative; min-height: 100vh; display: flex; align-items: center;
+  background: var(--gradient-hero); overflow: hidden;
+}
+.hero::before {
+  content: ''; position: absolute; top: -50%; right: -20%; width: 800px; height: 800px;
+  background: radial-gradient(circle, rgba(59,130,246,0.12) 0%, transparent 70%);
+  animation: heroPulse 8s ease-in-out infinite;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -30%; left: -10%; width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(6,182,212,0.08) 0%, transparent 70%);
+  animation: heroPulse 10s ease-in-out infinite 2s;
+}
+@keyframes heroPulse {
+  0%, 100% { transform: scale(1); opacity: 0.6; }
+  50% { transform: scale(1.15); opacity: 1; }
+}
+.hero-content { position: relative; z-index: 2; max-width: 800px; }
+.hero-badge {
+  display: inline-flex; align-items: center; gap: 8px;
+  background: rgba(59,130,246,0.12); border: 1px solid rgba(59,130,246,0.25);
+  padding: 8px 18px; border-radius: 50px; font-size: 0.85rem; color: var(--accent-cyan);
+  margin-bottom: 28px; letter-spacing: 0.5px;
+}
+.hero-badge .dot { width: 8px; height: 8px; background: var(--accent-cyan); border-radius: 50%; animation: blink 2s infinite; }
+@keyframes blink { 0%, 100% { opacity: 1; } 50% { opacity: 0.3; } }
+
+.hero h1 {
+  font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; line-height: 1.15;
+  background: linear-gradient(135deg, #e8ecf2 0%, #60a5fa 50%, #22d3ee 100%);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text; margin-bottom: 20px;
+}
+.hero-subtitle {
+  font-size: 1.25rem; color: var(--text-secondary); margin-bottom: 36px;
+  max-width: 600px; line-height: 1.8;
+}
+.hero-stats { display: flex; gap: 48px; margin-bottom: 40px; }
+.hero-stat { text-align: left; }
+.hero-stat .num { font-size: 2.2rem; font-weight: 800; color: var(--accent-cyan); }
+.hero-stat .num .plus { color: var(--accent-amber); }
+.hero-stat .label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+.hero-cta {
+  display: inline-flex; align-items: center; gap: 10px;
+  background: var(--gradient-blue); color: #fff; padding: 14px 32px;
+  border-radius: 50px; font-size: 1rem; font-weight: 600; text-decoration: none;
+  transition: all 0.3s; box-shadow: 0 4px 24px rgba(59,130,246,0.35);
+}
+.hero-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 36px rgba(59,130,246,0.5); }
+.hero-cta .arrow { transition: transform 0.3s; }
+.hero-cta:hover .arrow { transform: translateX(4px); }
+.hero-visual {
+  position: absolute; right: -60px; top: 50%; transform: translateY(-50%);
+  width: 700px; height: 700px; z-index: 1;
+}
+
+/* === SECTION STYLES === */
+.section { padding: 100px 0; position: relative; z-index: 1; }
+.section-dark { background: var(--bg-primary); }
+.section-deeper { background: var(--bg-deep); }
+.section-label {
+  font-size: 0.8rem; font-weight: 700; letter-spacing: 3px; text-transform: uppercase;
+  color: var(--accent-cyan); margin-bottom: 12px;
+}
+.section-title {
+  font-size: clamp(1.8rem, 3vw, 2.5rem); font-weight: 800; margin-bottom: 16px;
+  color: var(--text-primary);
+}
+.section-title .highlight { background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.section-desc {
+  font-size: 1.05rem; color: var(--text-secondary); max-width: 700px;
+  margin-bottom: 48px; line-height: 1.8;
+}
+
+/* === SCROLL REVEAL === */
+.reveal { opacity: 0; transform: translateY(40px); transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-left { transform: translateX(-40px); }
+.reveal-right { transform: translateX(40px); }
+.reveal-left.visible, .reveal-right.visible { transform: translateX(0); opacity: 1; }
+
+/* === PROBLEM SECTION === */
+.pain-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+.pain-card {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); padding: 32px 28px;
+  transition: all 0.3s; position: relative; overflow: hidden;
+}
+.pain-card:hover { border-color: var(--border-accent); transform: translateY(-4px); box-shadow: var(--shadow-glow); }
+.pain-card .icon-box {
+  width: 52px; height: 52px; border-radius: var(--radius-md); display: flex;
+  align-items: center; justify-content: center; font-size: 1.5rem; margin-bottom: 20px;
+}
+.pain-card:nth-child(1) .icon-box { background: rgba(244,63,94,0.15); color: var(--accent-rose); }
+.pain-card:nth-child(2) .icon-box { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+.pain-card:nth-child(3) .icon-box { background: rgba(139,92,246,0.15); color: var(--accent-violet); }
+.pain-card h3 { font-size: 1.1rem; margin-bottom: 8px; color: var(--text-primary); }
+.pain-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* === METHODOLOGY === */
+.method-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+.method-visual { position: relative; }
+.pie-chart { width: 320px; height: 320px; margin: 0 auto; }
+.method-text h3 { font-size: 1.6rem; font-weight: 700; margin-bottom: 16px; }
+.method-text h3 .pct { font-size: 3rem; background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.method-features { list-style: none; margin-top: 24px; }
+.method-features li {
+  padding: 12px 0; border-bottom: 1px solid var(--border-subtle);
+  display: flex; align-items: flex-start; gap: 12px; color: var(--text-secondary);
+}
+.method-features li::before {
+  content: ''; min-width: 6px; height: 6px; background: var(--accent-cyan);
+  border-radius: 50%; margin-top: 8px;
+}
+
+/* === ARCHITECTURE === */
+.arch-diagram {
+  display: flex; flex-direction: column; gap: 8px;
+  max-width: 700px; margin: 0 auto;
+}
+.arch-layer {
+  display: flex; align-items: center; justify-content: center; gap: 16px;
+  padding: 18px 28px; border-radius: var(--radius-md);
+  font-weight: 700; font-size: 0.95rem; position: relative;
+  transition: all 0.3s;
+}
+.arch-layer:hover { transform: scale(1.02); }
+.arch-layer .layer-num {
+  width: 36px; height: 36px; border-radius: 50%; display: flex;
+  align-items: center; justify-content: center; font-size: 0.85rem;
+  font-weight: 800; flex-shrink: 0;
+}
+.arch-layer-5 { background: linear-gradient(135deg, rgba(59,130,246,0.2), rgba(59,130,246,0.05)); border: 1px solid rgba(59,130,246,0.3); }
+.arch-layer-5 .layer-num { background: rgba(59,130,246,0.3); color: var(--accent-blue); }
+.arch-layer-4 { background: linear-gradient(135deg, rgba(6,182,212,0.2), rgba(6,182,212,0.05)); border: 1px solid rgba(6,182,212,0.3); }
+.arch-layer-4 .layer-num { background: rgba(6,182,212,0.3); color: var(--accent-cyan); }
+.arch-layer-3 { background: linear-gradient(135deg, rgba(139,92,246,0.2), rgba(139,92,246,0.05)); border: 1px solid rgba(139,92,246,0.3); }
+.arch-layer-3 .layer-num { background: rgba(139,92,246,0.3); color: var(--accent-violet); }
+.arch-layer-2 { background: linear-gradient(135deg, rgba(245,158,11,0.2), rgba(245,158,11,0.05)); border: 1px solid rgba(245,158,11,0.3); }
+.arch-layer-2 .layer-num { background: rgba(245,158,11,0.3); color: var(--accent-amber); }
+.arch-layer-1 { background: linear-gradient(135deg, rgba(16,185,129,0.2), rgba(16,185,129,0.05)); border: 1px solid rgba(16,185,129,0.3); }
+.arch-layer-1 .layer-num { background: rgba(16,185,129,0.3); color: var(--accent-emerald); }
+.arch-arrow { text-align: center; color: var(--text-muted); font-size: 1.2rem; padding: 4px 0; }
+
+/* === WORKFLOW === */
+.workflow-timeline {
+  display: flex; gap: 0; position: relative; overflow-x: auto;
+  padding: 20px 0 40px;
+}
+.workflow-timeline::before {
+  content: ''; position: absolute; top: 52px; left: 40px; right: 40px;
+  height: 2px; background: linear-gradient(90deg, var(--accent-blue), var(--accent-cyan), var(--accent-teal), var(--accent-emerald)); z-index: 0;
+}
+.workflow-step {
+  flex: 1; min-width: 180px; text-align: center; position: relative; z-index: 1;
+  padding: 0 12px;
+}
+.workflow-step .step-circle {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 20px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.5rem; font-weight: 800; position: relative;
+  z-index: 2;
+}
+.workflow-step:nth-child(1) .step-circle { background: linear-gradient(135deg, #3b82f6, #2563eb); box-shadow: 0 0 30px rgba(59,130,246,0.3); }
+.workflow-step:nth-child(2) .step-circle { background: linear-gradient(135deg, #06b6d4, #0891b2); box-shadow: 0 0 30px rgba(6,182,212,0.3); }
+.workflow-step:nth-child(3) .step-circle { background: linear-gradient(135deg, #14b8a6, #0d9488); box-shadow: 0 0 30px rgba(20,184,166,0.3); }
+.workflow-step:nth-child(4) .step-circle { background: linear-gradient(135deg, #10b981, #059669); box-shadow: 0 0 30px rgba(16,185,129,0.3); }
+.workflow-step h4 { font-size: 1rem; margin-bottom: 6px; color: var(--text-primary); }
+.workflow-step p { font-size: 0.8rem; color: var(--text-muted); line-height: 1.5; }
+
+/* === SKILLS TABS === */
+.skills-container { margin-top: 40px; }
+.skills-tabs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
+.skills-tab {
+  padding: 10px 20px; border-radius: 50px; font-size: 0.85rem; font-weight: 600;
+  cursor: pointer; transition: all 0.3s; border: 1px solid var(--border-medium);
+  background: transparent; color: var(--text-secondary);
+}
+.skills-tab:hover { border-color: var(--accent-blue); color: var(--text-primary); }
+.skills-tab.active { background: var(--gradient-blue); border-color: transparent; color: #fff; }
+.skills-tab-orch { color: var(--accent-violet); }
+.skills-tab-trans { color: var(--accent-cyan); }
+.skills-tab-indep { color: var(--accent-amber); }
+
+.skills-panel { display: none; }
+.skills-panel.active { display: block; animation: fadeSlideIn 0.5s ease; }
+@keyframes fadeSlideIn {
+  from { opacity: 0; transform: translateY(16px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+.skill-detail-card {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); padding: 32px;
+}
+.skill-detail-card .skill-header { display: flex; align-items: center; gap: 16px; margin-bottom: 20px; }
+.skill-detail-card .skill-id {
+  background: var(--gradient-blue); color: #fff; padding: 6px 14px;
+  border-radius: 50px; font-size: 0.8rem; font-weight: 700; white-space: nowrap;
+}
+.skill-detail-card .skill-id.orch { background: var(--gradient-violet); }
+.skill-detail-card .skill-id.trans { background: var(--gradient-blue); }
+.skill-detail-card .skill-id.indep { background: var(--gradient-warm); }
+.skill-detail-card h4 { font-size: 1.15rem; color: var(--text-primary); }
+.skill-detail-card .skill-role { font-size: 0.85rem; color: var(--text-muted); }
+.skill-detail-card .skill-outputs {
+  display: flex; gap: 10px; flex-wrap: wrap; margin-top: 16px;
+}
+.skill-detail-card .skill-output {
+  padding: 6px 14px; border-radius: 50px; font-size: 0.8rem;
+  background: rgba(59,130,246,0.1); border: 1px solid rgba(59,130,246,0.2);
+  color: var(--accent-cyan);
+}
+
+/* === RULES ACCORDION === */
+.rules-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.rule-category {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); overflow: hidden; transition: all 0.3s;
+}
+.rule-category:hover { border-color: var(--border-accent); }
+.rule-cat-header {
+  padding: 20px 24px; cursor: pointer; display: flex; align-items: center;
+  justify-content: space-between; user-select: none;
+}
+.rule-cat-header h4 { font-size: 0.95rem; color: var(--text-primary); display: flex; align-items: center; gap: 10px; }
+.rule-cat-header .cat-badge {
+  padding: 3px 10px; border-radius: 50px; font-size: 0.75rem; font-weight: 700;
+}
+.rule-cat-header .arrow-icon { transition: transform 0.3s; color: var(--text-muted); }
+.rule-category.open .arrow-icon { transform: rotate(180deg); }
+.rule-cat-body { max-height: 0; overflow: hidden; transition: max-height 0.4s ease; }
+.rule-category.open .rule-cat-body { max-height: 600px; }
+.rule-cat-body-inner { padding: 0 24px 20px; }
+.rule-item {
+  padding: 12px 0; border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.85rem;
+}
+.rule-item:last-child { border-bottom: none; }
+.rule-item .rule-priority {
+  display: inline-block; padding: 2px 8px; border-radius: 4px;
+  font-size: 0.7rem; font-weight: 700; margin-right: 8px;
+}
+.rule-priority.critical { background: rgba(244,63,94,0.15); color: var(--accent-rose); }
+.rule-priority.high { background: rgba(245,158,11,0.15); color: var(--accent-amber); }
+.rule-priority.medium { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
+.rule-item .rule-id { font-family: var(--font-mono); font-size: 0.75rem; color: var(--accent-cyan); margin-right: 8px; }
+.rule-item .rule-name { color: var(--text-primary); }
+
+/* === TECH STACK === */
+.tech-flow { display: flex; align-items: center; gap: 24px; flex-wrap: wrap; justify-content: center; }
+.tech-group {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); padding: 24px; text-align: center; min-width: 140px;
+}
+.tech-group h5 { font-size: 0.75rem; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 16px; }
+.tech-item {
+  padding: 8px 14px; border-radius: var(--radius-sm); font-size: 0.82rem;
+  margin-bottom: 8px; font-weight: 500;
+}
+.tech-legacy { background: rgba(244,63,94,0.1); border: 1px solid rgba(244,63,94,0.2); color: var(--accent-rose); }
+.tech-target { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); color: var(--accent-emerald); }
+.tech-arrow-svg { flex-shrink: 0; }
+
+/* === METRICS === */
+.metrics-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; }
+.metric-card.metric-highlight { border-color: rgba(245,158,11,0.35); background: linear-gradient(145deg, rgba(245,158,11,0.08), rgba(19,27,46,0.95)); }
+.metric-card.metric-highlight:hover { border-color: rgba(245,158,11,0.55); box-shadow: 0 0 40px rgba(245,158,11,0.15); }
+.metric-card.metric-highlight .metric-value { background: linear-gradient(135deg, #f59e0b, #f97316); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.metric-footnote { text-align: center; margin-top: 32px; font-size: 0.78rem; color: var(--text-muted); line-height: 1.8; max-width: 750px; margin-left: auto; margin-right: auto; padding: 16px 24px; background: rgba(245,158,11,0.04); border: 1px solid rgba(245,158,11,0.12); border-radius: var(--radius-md); }
+.metric-card {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); padding: 28px 24px; text-align: center;
+  transition: all 0.3s;
+}
+.metric-card:hover { border-color: var(--border-accent); transform: translateY(-4px); }
+.metric-card .metric-icon { font-size: 2rem; margin-bottom: 12px; }
+.metric-card .metric-value {
+  font-size: 2.2rem; font-weight: 800; background: var(--gradient-blue);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+}
+.metric-card .metric-label { font-size: 0.85rem; color: var(--text-muted); margin-top: 4px; }
+
+/* === DIFFERENTIATORS === */
+.diff-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 24px; }
+.diff-card {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); padding: 32px; transition: all 0.3s;
+  position: relative; overflow: hidden;
+}
+.diff-card:hover { border-color: var(--border-accent); }
+.diff-card::before {
+  content: ''; position: absolute; top: 0; left: 0; width: 4px; height: 100%;
+  border-radius: 2px 0 0 2px;
+}
+.diff-card:nth-child(1)::before { background: var(--accent-blue); }
+.diff-card:nth-child(2)::before { background: var(--accent-cyan); }
+.diff-card:nth-child(3)::before { background: var(--accent-violet); }
+.diff-card:nth-child(4)::before { background: var(--accent-amber); }
+.diff-card h4 { font-size: 1.1rem; margin-bottom: 10px; color: var(--text-primary); }
+.diff-card p { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.7; }
+
+/* === BEFORE AFTER === */
+.ba-container { display: grid; grid-template-columns: 1fr auto 1fr; gap: 0; align-items: stretch; }
+.ba-col { padding: 32px; border-radius: var(--radius-lg); }
+.ba-before { background: linear-gradient(135deg, rgba(244,63,94,0.08), rgba(244,63,94,0.02)); border: 1px solid rgba(244,63,94,0.15); }
+.ba-after { background: linear-gradient(135deg, rgba(16,185,129,0.08), rgba(16,185,129,0.02)); border: 1px solid rgba(16,185,129,0.15); }
+.ba-divider {
+  display: flex; align-items: center; justify-content: center; padding: 0 16px;
+  font-size: 2rem;
+}
+.ba-col h4 { font-size: 1.1rem; margin-bottom: 24px; text-align: center; }
+.ba-before h4 { color: var(--accent-rose); }
+.ba-after h4 { color: var(--accent-emerald); }
+.ba-item { padding: 10px 0; border-bottom: 1px solid var(--border-subtle); font-size: 0.9rem; color: var(--text-secondary); display: flex; align-items: center; gap: 10px; }
+.ba-before .ba-item::before { content: '✕'; color: var(--accent-rose); font-size: 0.85rem; }
+.ba-after .ba-item::before { content: '✓'; color: var(--accent-emerald); font-size: 0.85rem; font-weight: 700; }
+
+/* === VALUE SECTION === */
+.value-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.value-card {
+  background: var(--gradient-card); border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg); padding: 36px 28px; text-align: center; transition: all 0.3s;
+}
+.value-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-glow); }
+.value-card .v-icon { font-size: 2.5rem; margin-bottom: 16px; }
+.value-card h4 { font-size: 1.15rem; margin-bottom: 8px; }
+.value-card .v-stat { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+.value-card:nth-child(1) .v-stat { background: var(--gradient-blue); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.value-card:nth-child(2) .v-stat { background: linear-gradient(135deg, #14b8a6, #10b981); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.value-card:nth-child(3) .v-stat { background: var(--gradient-violet); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; }
+.value-card p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.6; }
+
+/* === FOOTER === */
+.footer {
+  padding: 60px 0; text-align: center; border-top: 1px solid var(--border-subtle);
+  color: var(--text-muted); font-size: 0.85rem;
+}
+.footer .logo-text { font-size: 1.2rem; font-weight: 700; color: var(--text-primary); margin-bottom: 8px; }
+.footer .contact { margin-top: 16px; display: flex; gap: 32px; justify-content: center; flex-wrap: wrap; }
+.footer .contact-item { color: var(--text-secondary); text-decoration: none; transition: color 0.3s; }
+.footer .contact-item:hover { color: var(--accent-cyan); }
+
+/* === NAVIGATION DOT === */
+.nav-dots { position: fixed; right: 24px; top: 50%; transform: translateY(-50%); z-index: 100; display: flex; flex-direction: column; gap: 12px; }
+.nav-dot {
+  width: 10px; height: 10px; border-radius: 50%; background: var(--text-muted);
+  cursor: pointer; transition: all 0.3s;
+}
+.nav-dot.active { background: var(--accent-cyan); box-shadow: 0 0 12px rgba(6,182,212,0.5); transform: scale(1.3); }
+.nav-dot:hover { background: var(--accent-blue); }
+
+/* === RESPONSIVE === */
+@media (max-width: 1024px) {
+  .pain-cards, .rules-grid { grid-template-columns: repeat(2, 1fr); }
+  .metrics-grid { grid-template-columns: repeat(3, 1fr); }
+  .diff-grid { grid-template-columns: 1fr; }
+  .ba-container { grid-template-columns: 1fr; }
+  .ba-divider { padding: 16px 0; }
+}
+@media (max-width: 768px) {
+  .pain-cards, .rules-grid, .value-cards { grid-template-columns: 1fr; }
+  .metrics-grid { grid-template-columns: 1fr; }
+  .hero-stats { flex-wrap: wrap; gap: 24px; }
+  .nav-dots { display: none; }
+  .hero h1 { font-size: 2rem; }
+  .method-grid { grid-template-columns: 1fr; }
+  .tech-flow { flex-direction: column; }
+  .workflow-timeline { flex-direction: column; gap: 32px; }
+  .workflow-timeline::before { display: none; }
+}
+
+/* === PRINT STYLES === */
+@media print {
+  body { background: #fff; color: #000; }
+  .nav-dots, #particles-canvas { display: none; }
+  .section { break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles-canvas"></canvas>
+
+<!-- Navigation Dots -->
+<nav class="nav-dots" id="navDots">
+  <div class="nav-dot active" data-section="hero"></div>
+  <div class="nav-dot" data-section="pain"></div>
+  <div class="nav-dot" data-section="method"></div>
+  <div class="nav-dot" data-section="arch"></div>
+  <div class="nav-dot" data-section="workflow"></div>
+  <div class="nav-dot" data-section="skills"></div>
+  <div class="nav-dot" data-section="rules"></div>
+  <div class="nav-dot" data-section="tech"></div>
+  <div class="nav-dot" data-section="case"></div>
+  <div class="nav-dot" data-section="diff"></div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="hero">
+  <div class="container">
+    <div class="hero-content reveal">
+      <div class="hero-badge"><span class="dot"></span> 中科软科技 · 金融保险五部 · v2.1.0</div>
+      <h1>ITAI Agent Skills<br>信创改造智能体平台</h1>
+      <p class="hero-subtitle">
+        面向保险行业核心系统的<b>AI驱动信创迁移平台</b>。基于Rule/Skill/Agent/Validation四层架构，
+        将传统数月人工改造压缩至<b>数天</b>完成，<b>提升效率35%+</b>，让每一次迁移都成为可复用的企业知识资产。
+      </p>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="num">12<span class="plus">+</span></div><div class="label">智能体技能</div></div>
+        <div class="hero-stat"><div class="num">25<span class="plus">+</span></div><div class="label">规则引擎</div></div>
+        <div class="hero-stat"><div class="num">35<span class="plus">%</span></div><div class="label">效率提升</div></div>
+        <div class="hero-stat"><div class="num">80<span class="plus">%</span></div><div class="label">模式复用率</div></div>
+      </div>
+      <a href="#pain" class="hero-cta">
+        探索平台能力 <span class="arrow">→</span>
+      </a>
+    </div>
+  </div>
+  <svg class="hero-visual" viewBox="0 0 700 700" xmlns="http://www.w3.org/2000/svg">
+    <defs>
+      <radialGradient id="glow1" cx="50%" cy="50%"><stop offset="0%" stop-color="#3b82f6" stop-opacity="0.15"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+      <radialGradient id="glow2" cx="50%" cy="50%"><stop offset="0%" stop-color="#06b6d4" stop-opacity="0.1"/><stop offset="100%" stop-color="transparent"/></radialGradient>
+    </defs>
+    <circle cx="350" cy="350" r="300" fill="url(#glow1)"/>
+    <circle cx="300" cy="250" r="180" fill="url(#glow2)"/>
+    <!-- Architecture rings -->
+    <circle cx="350" cy="350" r="260" fill="none" stroke="rgba(59,130,246,0.08)" stroke-width="1"/>
+    <circle cx="350" cy="350" r="200" fill="none" stroke="rgba(6,182,212,0.1)" stroke-width="1"/>
+    <circle cx="350" cy="350" r="140" fill="none" stroke="rgba(139,92,246,0.1)" stroke-width="1"/>
+    <circle cx="350" cy="350" r="80" fill="none" stroke="rgba(245,158,11,0.12)" stroke-width="1"/>
+    <!-- Connected nodes -->
+    <circle cx="350" cy="90" r="6" fill="#3b82f6" opacity="0.6"/>
+    <circle cx="500" cy="160" r="5" fill="#06b6d4" opacity="0.5"/>
+    <circle cx="550" cy="280" r="4" fill="#8b5cf6" opacity="0.4"/>
+    <circle cx="520" cy="420" r="5" fill="#14b8a6" opacity="0.5"/>
+    <circle cx="420" cy="530" r="4" fill="#f59e0b" opacity="0.4"/>
+    <circle cx="280" cy="540" r="5" fill="#10b981" opacity="0.5"/>
+    <circle cx="180" cy="430" r="4" fill="#3b82f6" opacity="0.4"/>
+    <circle cx="140" cy="290" r="5" fill="#f43f5e" opacity="0.4"/>
+    <circle cx="200" cy="170" r="4" fill="#06b6d4" opacity="0.5"/>
+    <!-- Connecting lines -->
+    <line x1="350" y1="90" x2="500" y2="160" stroke="rgba(59,130,246,0.15)" stroke-width="1"/>
+    <line x1="500" y1="160" x2="550" y2="280" stroke="rgba(6,182,212,0.12)" stroke-width="1"/>
+    <line x1="550" y1="280" x2="520" y2="420" stroke="rgba(139,92,246,0.12)" stroke-width="1"/>
+    <line x1="520" y1="420" x2="420" y2="530" stroke="rgba(20,184,166,0.12)" stroke-width="1"/>
+    <line x1="420" y1="530" x2="280" y2="540" stroke="rgba(245,158,11,0.12)" stroke-width="1"/>
+    <line x1="280" y1="540" x2="180" y2="430" stroke="rgba(16,185,129,0.12)" stroke-width="1"/>
+    <line x1="180" y1="430" x2="140" y2="290" stroke="rgba(59,130,246,0.1)" stroke-width="1"/>
+    <line x1="140" y1="290" x2="200" y2="170" stroke="rgba(244,63,94,0.1)" stroke-width="1"/>
+    <!-- Center hub -->
+    <circle cx="350" cy="350" r="35" fill="rgba(59,130,246,0.15)" stroke="rgba(59,130,246,0.3)" stroke-width="1.5"/>
+    <text x="350" y="346" text-anchor="middle" fill="#60a5fa" font-size="13" font-weight="700" font-family="sans-serif">ITAI</text>
+    <text x="350" y="362" text-anchor="middle" fill="#93c5fd" font-size="9" font-family="sans-serif">Platform</text>
+  </svg>
+</section>
+
+<!-- ===== PAIN POINTS ===== -->
+<section class="section section-dark" id="pain">
+  <div class="container">
+    <div class="section-label reveal">WHY IT MATTERS</div>
+    <h2 class="section-title reveal">为什么需要<span class="highlight">AI驱动的信创改造</span>？</h2>
+    <p class="section-desc reveal">
+      保险行业核心系统规模庞大、业务耦合紧密。传统人工改造方式面临三大核心痛点：
+    </p>
+    <div class="pain-cards reveal">
+      <div class="pain-card">
+        <div class="icon-box">⏱️</div>
+        <h3>周期长、成本高</h3>
+        <p>传统人工改造一个中等规模保险系统需要 <b>1,654人天</b>。每个系统的80%技术改造是重复劳动，但每次都从零开始，造成巨大资源浪费。</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon-box">🎯</div>
+        <h3>质量难保障</h3>
+        <p>Oracle→国产数据库的兼容性问题隐蔽且分散，人工排查容易遗漏；JDK升级、框架替换涉及数千文件，<b>一致性无法保证</b>。</p>
+      </div>
+      <div class="pain-card">
+        <div class="icon-box">📚</div>
+        <h3>知识难沉淀</h3>
+        <p>每个项目积累的经验随人员流动而流失。缺乏可复用的知识库和标准化流程，<b>重复踩坑</b>成为常态。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== METHODOLOGY ===== -->
+<section class="section section-deeper" id="method">
+  <div class="container">
+    <div class="section-label reveal">CORE METHODOLOGY</div>
+    <h2 class="section-title reveal"><span class="highlight">80/20方法论</span>——最大化复用，聚焦差异</h2>
+    <p class="section-desc reveal">
+      深入分析数十个保险核心系统后，我们发现一个关键规律——每个系统的改造内容中，<b>80%是共性问题，仅20%是系统特有的差异</b>。
+    </p>
+    <div class="method-grid">
+      <div class="method-visual reveal reveal-left">
+        <svg class="pie-chart" viewBox="0 0 320 320">
+          <circle cx="160" cy="160" r="140" fill="none" stroke="rgba(59,130,246,0.08)" stroke-width="60"/>
+          <!-- 80% segment -->
+          <circle cx="160" cy="160" r="140" fill="none" stroke="#3b82f6" stroke-width="60"
+            stroke-dasharray="703.7 175.9" stroke-dashoffset="0" transform="rotate(-90 160 160)" opacity="0.85"/>
+          <!-- 20% segment -->
+          <circle cx="160" cy="160" r="140" fill="none" stroke="#06b6d4" stroke-width="60"
+            stroke-dasharray="175.9 703.7" stroke-dashoffset="-703.7" transform="rotate(-90 160 160)" opacity="0.65"/>
+          <!-- Labels -->
+          <text x="160" y="148" text-anchor="middle" fill="#e8ecf2" font-size="36" font-weight="800">80%</text>
+          <text x="160" y="172" text-anchor="middle" fill="#8896b4" font-size="14">共性模式</text>
+          <!-- Pointer to 20% -->
+          <text x="255" y="100" fill="#06b6d4" font-size="14" font-weight="700">20%</text>
+          <text x="255" y="118" fill="#8896b4" font-size="11">系统差异</text>
+          <line x1="250" y1="130" x2="275" y2="160" stroke="#06b6d4" stroke-width="1" stroke-dasharray="3,3"/>
+        </svg>
+      </div>
+      <div class="method-text reveal reveal-right">
+        <h3>每个系统的<span class="pct">80%</span>改造内容<br>是跨项目通用的</h3>
+        <ul class="method-features">
+          <li>数据库层改造：DBManager→MyBatis-Plus，Oracle SQL→国产数据库SQL</li>
+          <li>框架升级：手动事务→Spring @Transactional，无IoC→Spring容器</li>
+          <li>构建部署：javac编译→Maven构建，增量部署→完整WAR包</li>
+          <li>前端适配：IE→Chrome兼容，JSP脚本→标准化API</li>
+          <li>接口拆分：跨系统直连表→API调用，存储过程跨库→服务化</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== ARCHITECTURE ===== -->
+<section class="section section-dark" id="arch">
+  <div class="container">
+    <div class="section-label reveal">PLATFORM ARCHITECTURE</div>
+    <h2 class="section-title reveal">五层架构：从<span class="highlight">脚本到编排</span>的完整能力栈</h2>
+    <p class="section-desc reveal">
+      平台采用分层设计，每一层封装不同粒度的能力，层层递进，形成从底层自动化到高层智能编排的完整体系。
+    </p>
+    <div class="arch-diagram reveal">
+      <div class="arch-layer arch-layer-5">
+        <span class="layer-num">L5</span>
+        <div>
+          <strong>编排层 Orchestration</strong>
+          <div style="font-weight:400;font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">CLAUDE.md · 四阶段工作流引擎 · 项目上下文管理 · 渐进式加载</div>
+        </div>
+      </div>
+      <div class="arch-arrow">▼</div>
+      <div class="arch-layer arch-layer-4">
+        <span class="layer-num">L4</span>
+        <div>
+          <strong>执行层 Execution</strong>
+          <div style="font-weight:400;font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">12个智能体技能 · 4个编排技能 + 7个改造技能 + 1个独立技能</div>
+        </div>
+      </div>
+      <div class="arch-arrow">▼</div>
+      <div class="arch-layer arch-layer-3">
+        <span class="layer-num">L3</span>
+        <div>
+          <strong>知识层 Knowledge</strong>
+          <div style="font-weight:400;font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">25条规则 · 12个分类 · CRITICAL/HIGH/MEDIUM优先级系统</div>
+        </div>
+      </div>
+      <div class="arch-arrow">▼</div>
+      <div class="arch-layer arch-layer-2">
+        <span class="layer-num">L2</span>
+        <div>
+          <strong>模板层 Templates</strong>
+          <div style="font-weight:400;font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">适配方案模板 · WBS计划模板 · 接口拆分清单模板</div>
+        </div>
+      </div>
+      <div class="arch-arrow">▼</div>
+      <div class="arch-layer arch-layer-1">
+        <span class="layer-num">L1</span>
+        <div>
+          <strong>脚本层 Scripts</strong>
+          <div style="font-weight:400;font-size:0.8rem;color:var(--text-secondary);margin-top:4px;">8个Python脚本 · 实体扫描 · 骨架生成 · 迁移验证 · 差异对比 · 语法检测</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== WORKFLOW ===== -->
+<section class="section section-deeper" id="workflow">
+  <div class="container">
+    <div class="section-label reveal">HOW IT WORKS</div>
+    <h2 class="section-title reveal">四阶段工作流：从<span class="highlight">分析到交付</span>的一站式闭环</h2>
+    <p class="section-desc reveal">
+      每个项目严格遵循"分析→规则→编码→审核"四阶段流程，确保每一步都有据可依、有迹可循。
+    </p>
+    <div class="workflow-timeline reveal">
+      <div class="workflow-step">
+        <div class="step-circle">🔍</div>
+        <h4>Phase 1：项目分析</h4>
+        <p>数据库选型 · JDK决策 · 框架升级评估 · 接口拆分 · 自动技术栈检测</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:var(--accent-blue);">产出：项目WIKI + 适配方案 + 清单</p>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">📋</div>
+        <h4>Phase 2：规则准备</h4>
+        <p>覆盖度分析 · 缺口识别 · 新规则生成 · 规则适用矩阵</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:var(--accent-cyan);">产出：规则适用矩阵 + 增强规则</p>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">⚡</div>
+        <h4>Phase 3：AI编码</h4>
+        <p>Maven+JDK升级 → 框架搭建 → 数据层 → 业务层 → UI → JSP → 部署配置</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:var(--accent-teal);">产出：完整Maven项目 + WAR包</p>
+      </div>
+      <div class="workflow-step">
+        <div class="step-circle">✅</div>
+        <h4>Phase 4：审核交付</h4>
+        <p>五轮审核：静态规则 → 脚本验证 → 编译检查 → 运行时验证 → 代码审查</p>
+        <p style="margin-top:8px;font-size:0.75rem;color:var(--accent-emerald);">产出：审核报告 + 遗留问题清单</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== SKILLS ===== -->
+<section class="section section-dark" id="skills">
+  <div class="container">
+    <div class="section-label reveal">CORE CAPABILITIES</div>
+    <h2 class="section-title reveal">12大智能体技能：<span class="highlight">编排 + 改造 + 专项</span></h2>
+    <p class="section-desc reveal">
+      每个技能封装了一个完整的迁移子任务，包含角色定义、操作步骤、规则引用和验证标准。AI自动执行，人工只需确认关键决策点。
+    </p>
+
+    <div class="skills-container reveal">
+      <div class="skills-tabs" id="skillsTabs">
+        <div class="skills-tab active" data-panel="orch">🎯 编排类 (4)</div>
+        <div class="skills-tab" data-panel="trans">🔧 改造类 (7)</div>
+        <div class="skills-tab" data-panel="indep">⭐ 专项类 (1)</div>
+      </div>
+
+      <!-- 编排类 -->
+      <div class="skills-panel active" id="panel-orch">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id orch">01</span>
+              <div><h4>项目分析器</h4><div class="skill-role">Senior Java Architect + 信创迁移专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">自动扫描遗留源码，检测技术栈，确认数据库/JDK/框架升级路径，识别接口拆分需求。支持交互式多选决策，输出完整项目WIKI。</p>
+            <div class="skill-outputs"><span class="skill-output">项目WIKI</span><span class="skill-output">实体扫描报告</span><span class="skill-output">升级路径决策</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id orch">02</span>
+              <div><h4>适配方案规划器</h4><div class="skill-role">Senior PM + 技术架构师</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">基于分析结果动态生成适配方案、Checklist（5个Sheet）、WBS计划。章节根据确认范围动态调整，避免冗余。</p>
+            <div class="skill-outputs"><span class="skill-output">适配方案</span><span class="skill-output">Checklist.xlsx</span><span class="skill-output">WBS计划</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id orch">03</span>
+              <div><h4>规则管理器</h4><div class="skill-role">信创规则专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">分析现有规则库覆盖度，识别缺口，生成新规则或增强现有规则，输出规则适用矩阵。</p>
+            <div class="skill-outputs"><span class="skill-output">规则适用矩阵</span><span class="skill-output">新增/增强规则</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id orch">11</span>
+              <div><h4>迁移审核器</h4><div class="skill-role">Senior Java Code Review Expert</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">五轮审核：静态规则检查→脚本验证→编译检查→运行时验证→代码审查。输出7部分审核报告。</p>
+            <div class="skill-outputs"><span class="skill-output">审核报告</span><span class="skill-output">问题清单</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 改造类 -->
+      <div class="skills-panel" id="panel-trans">
+        <div style="display:grid;grid-template-columns:repeat(2,1fr);gap:16px;">
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">04</span>
+              <div><h4>Maven + JDK升级</h4><div class="skill-role">构建工具迁移专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">javac手动编译→Maven 3.8+，JDK 1.6→1.8，WebSphere→国产中间件，增量发布→完整WAR包。</p>
+            <div class="skill-outputs"><span class="skill-output">pom.xml</span><span class="skill-output">目录结构</span><span class="skill-output">mvn compile</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">05</span>
+              <div><h4>Spring + MyBatis 搭建</h4><div class="skill-role">框架集成专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">无IoC→Spring ApplicationContext，手动事务→@Transactional，DBManager JDBC→MyBatis-Plus。双数据源Druid连接池。</p>
+            <div class="skill-outputs"><span class="skill-output">applicationContext.xml</span><span class="skill-output">Druid配置</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">06</span>
+              <div><h4>数据库层迁移</h4><div class="skill-role">数据访问层改造专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">DB*Base.java→Mapper.java+Mapper.xml，DTO升级MyBatis-Plus注解。8条详细规则，批处理模式1-3个模块/次。</p>
+            <div class="skill-outputs"><span class="skill-output">Mapper.java</span><span class="skill-output">Mapper.xml</span><span class="skill-output">DTO升级</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">07</span>
+              <div><h4>业务层迁移</h4><div class="skill-role">业务逻辑层改造专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">DBManager try-catch-commit→@Transactional，Facade+Action→AbstractService+Service。PaymentBaseService通用基类减少~50行/类。</p>
+            <div class="skill-outputs"><span class="skill-output">Service类</span><span class="skill-output">事务管理</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">08</span>
+              <div><h4>Command/UI适配</h4><div class="skill-role">控制层改造专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">new BL*Facade()→SpringContextUtil.getBean()，Oracle SQL扫描适配（CONNECT BY, rownum, (+)外连接等）。</p>
+            <div class="skill-outputs"><span class="skill-output">Command类</span><span class="skill-output">SQL适配</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">09</span>
+              <div><h4>JSP兼容性</h4><div class="skill-role">前端兼容性专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">两类改造：A类（服务端Java脚本→标准API）+ B类（客户端IE JS→Chrome标准）。P0优先级：sun.misc.BASE64 + 内嵌JDBC + HTMLCollection函数调用。</p>
+            <div class="skill-outputs"><span class="skill-output">JSP改造</span><span class="skill-output">JS兼容</span></div>
+          </div>
+          <div class="skill-detail-card">
+            <div class="skill-header">
+              <span class="skill-id trans">10</span>
+              <div><h4>配置部署</h4><div class="skill-role">部署配置专家</div></div>
+            </div>
+            <p style="font-size:0.9rem;color:var(--text-secondary);">dbmanager-config.xml→Druid DataSource，SysConstConfig DBTYPE→OCEANBASE，web.xml 2.3/2.4→3.1。支持TongWeb/BES/Tomcat部署。</p>
+            <div class="skill-outputs"><span class="skill-output">DataSource配置</span><span class="skill-output">web.xml升级</span><span class="skill-output">WAR包</span></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 专项类 -->
+      <div class="skills-panel" id="panel-indep">
+        <div class="skill-detail-card" style="max-width:700px;margin:0 auto;">
+          <div class="skill-header">
+            <span class="skill-id indep">12</span>
+            <div><h4>存储过程迁移</h4><div class="skill-role">数据库专项专家</div></div>
+          </div>
+          <p style="font-size:0.9rem;color:var(--text-secondary);margin-bottom:16px;">
+            四步闭环：分析（含翻译）→ 转换 → 对比（diff报告）→ 测试计划。支持达梦8、KingbaseES V8、OceanBase、Java代码四种目标形态。
+          </p>
+          <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:16px;">
+            <div style="background:rgba(59,130,246,0.08);padding:12px;border-radius:8px;text-align:center;">
+              <div style="font-size:0.7rem;color:var(--text-muted);">L0</div>
+              <div style="font-weight:700;color:var(--accent-emerald);">无需变更</div>
+            </div>
+            <div style="background:rgba(59,130,246,0.08);padding:12px;border-radius:8px;text-align:center;">
+              <div style="font-size:0.7rem;color:var(--text-muted);">L1</div>
+              <div style="font-weight:700;color:var(--accent-cyan);">语法替换</div>
+            </div>
+            <div style="background:rgba(59,130,246,0.08);padding:12px;border-radius:8px;text-align:center;">
+              <div style="font-size:0.7rem;color:var(--text-muted);">L2</div>
+              <div style="font-weight:700;color:var(--accent-amber);">类型适配</div>
+            </div>
+            <div style="background:rgba(59,130,246,0.08);padding:12px;border-radius:8px;text-align:center;">
+              <div style="font-size:0.7rem;color:var(--text-muted);">L3/L4</div>
+              <div style="font-weight:700;color:var(--accent-rose);">结构重写</div>
+            </div>
+          </div>
+          <div class="skill-outputs" style="margin-top:16px;">
+            <span class="skill-output">SP清单+复杂度评估</span>
+            <span class="skill-output">逐行注释翻译</span>
+            <span class="skill-output">Diff对比报告</span>
+            <span class="skill-output">测试计划</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RULES ===== -->
+<section class="section section-deeper" id="rules">
+  <div class="container">
+    <div class="section-label reveal">KNOWLEDGE ENGINE</div>
+    <h2 class="section-title reveal">25条规则引擎：<span class="highlight">12大分类</span>的知识资产</h2>
+    <p class="section-desc reveal">
+      每条规则定义了检测模式、替换策略和优先级。规则库随项目积累持续进化，让每个项目的经验赋能后续所有项目。
+    </p>
+    <div class="rules-grid reveal" id="rulesGrid">
+      <!-- Category: JDK -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(59,130,246,0.15);color:#3b82f6;">JDK</span> Java基础</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">JDK-001</span><span class="rule-name">BASE64编码器移除</span></div>
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">JDK-002</span><span class="rule-name">Unsafe API移除</span></div>
+          <div class="rule-item"><span class="rule-priority medium">MED</span><span class="rule-id">JDK-003</span><span class="rule-name">过时API替换</span></div>
+        </div></div>
+      </div>
+      <!-- Category: Struts -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(249,115,22,0.15);color:#f97316;">Struts</span> Web层</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority medium">MED</span><span class="rule-id">STRUTS-001</span><span class="rule-name">Struts版本升级</span></div>
+        </div></div>
+      </div>
+      <!-- Category: Spring -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(16,185,129,0.15);color:#10b981;">Spring</span> 框架</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">SPRING-001</span><span class="rule-name">手动事务→@Transactional</span></div>
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">SPRING-002</span><span class="rule-name">无IoC→Spring容器</span></div>
+        </div></div>
+      </div>
+      <!-- Category: Hibernate -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(139,92,246,0.15);color:#8b5cf6;">ORM</span> 持久层</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">HIBERNATE-001</span><span class="rule-name">Hibernate→MyBatis-Plus</span></div>
+        </div></div>
+      </div>
+      <!-- Category: JSP -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(236,72,153,0.15);color:#ec4899;">JSP</span> 页面</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">JSP-001</span><span class="rule-name">Scriptlet兼容性</span></div>
+          <div class="rule-item"><span class="rule-priority medium">MED</span><span class="rule-id">JSP-002</span><span class="rule-name">EL表达式兼容</span></div>
+        </div></div>
+      </div>
+      <!-- Category: Build -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(245,158,11,0.15);color:#f59e0b;">Build</span> 构建</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">BUILD-001</span><span class="rule-name">Ant/无构建→Maven</span></div>
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">BUILD-002</span><span class="rule-name">依赖版本锁定</span></div>
+        </div></div>
+      </div>
+      <!-- Category: Middleware -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(6,182,212,0.15);color:#06b6d4;">中间件</span> 部署</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">TW/BES-001</span><span class="rule-name">应用服务器DS→Druid</span></div>
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">TW/BES-002</span><span class="rule-name">WebSphere→国产中间件</span></div>
+        </div></div>
+      </div>
+      <!-- Category: DB: Dameng / OceanBase / Kingbase -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(244,63,94,0.15);color:#f43f5e;">国产DB</span> 数据库</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">DM/OB/KB-001</span><span class="rule-name">Oracle SQL兼容性</span></div>
+          <div class="rule-item"><span class="rule-priority medium">MED</span><span class="rule-id">DM/OB/KB-002</span><span class="rule-name">函数映射</span></div>
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">SP-001</span><span class="rule-name">存储过程Oracle语法</span></div>
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">SP-002</span><span class="rule-name">存储过程转换规则</span></div>
+        </div></div>
+      </div>
+      <!-- Category: Browser -->
+      <div class="rule-category" onclick="this.classList.toggle('open')">
+        <div class="rule-cat-header">
+          <h4><span class="cat-badge" style="background:rgba(59,130,246,0.15);color:#3b82f6;">Browser</span> 浏览器</h4>
+          <span class="arrow-icon">▾</span>
+        </div>
+        <div class="rule-cat-body"><div class="rule-cat-body-inner">
+          <div class="rule-item"><span class="rule-priority high">HIGH</span><span class="rule-id">BROWSER-001</span><span class="rule-name">IE→Chrome兼容</span></div>
+        </div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TECH STACK ===== -->
+<section class="section section-dark" id="tech">
+  <div class="container">
+    <div class="section-label reveal">TECHNOLOGY MAPPING</div>
+    <h2 class="section-title reveal">技术栈映射：<span class="highlight">从传统到信创</span>的全面升级</h2>
+    <p class="section-desc reveal">
+      平台覆盖保险系统全技术栈的迁移路径，从底层数据库到前端浏览器，形成完整的信创技术栈闭环。
+    </p>
+    <div class="tech-flow reveal">
+      <div class="tech-group">
+        <h5>📦 数据库</h5>
+        <div class="tech-item tech-legacy">Oracle 11g</div>
+        <div class="tech-item tech-legacy">存储过程</div>
+        <div class="tech-item tech-legacy">Sequence/Trigger</div>
+      </div>
+      <svg width="48" height="48" viewBox="0 0 48 48"><path d="M8 24h28M28 16l8 8-8 8" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <div class="tech-group">
+        <h5>📦 国产数据库</h5>
+        <div class="tech-item tech-target">OceanBase</div>
+        <div class="tech-item tech-target">达梦 DM8</div>
+        <div class="tech-item tech-target">KingbaseES V8</div>
+      </div>
+    </div>
+    <div class="tech-flow reveal" style="margin-top:24px;">
+      <div class="tech-group">
+        <h5>☕ JDK & 框架</h5>
+        <div class="tech-item tech-legacy">JDK 1.6</div>
+        <div class="tech-item tech-legacy">DBManager</div>
+        <div class="tech-item tech-legacy">Struts 1.x</div>
+      </div>
+      <svg width="48" height="48" viewBox="0 0 48 48"><path d="M8 24h28M28 16l8 8-8 8" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <div class="tech-group">
+        <h5>☕ 信创JDK & 框架</h5>
+        <div class="tech-item tech-target">JDK 1.8 (毕昇)</div>
+        <div class="tech-item tech-target">Spring 4.3 + MyBatis-Plus</div>
+        <div class="tech-item tech-target">@Transactional</div>
+      </div>
+    </div>
+    <div class="tech-flow reveal" style="margin-top:24px;">
+      <div class="tech-group">
+        <h5>🖥 中间件 & 部署</h5>
+        <div class="tech-item tech-legacy">WebSphere</div>
+        <div class="tech-item tech-legacy">Ant/javac</div>
+        <div class="tech-item tech-legacy">增量class部署</div>
+      </div>
+      <svg width="48" height="48" viewBox="0 0 48 48"><path d="M8 24h28M28 16l8 8-8 8" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <div class="tech-group">
+        <h5>🖥 国产中间件</h5>
+        <div class="tech-item tech-target">TongWeb / BES</div>
+        <div class="tech-item tech-target">Maven 3.8+</div>
+        <div class="tech-item tech-target">完整WAR包</div>
+      </div>
+    </div>
+    <div class="tech-flow reveal" style="margin-top:24px;">
+      <div class="tech-group">
+        <h5>🌐 前端</h5>
+        <div class="tech-item tech-legacy">IE 6/7/8</div>
+        <div class="tech-item tech-legacy">ActiveXObject</div>
+        <div class="tech-item tech-legacy">JSP Scriptlets</div>
+      </div>
+      <svg width="48" height="48" viewBox="0 0 48 48"><path d="M8 24h28M28 16l8 8-8 8" stroke="#06b6d4" stroke-width="2" fill="none" stroke-linecap="round"/></svg>
+      <div class="tech-group">
+        <h5>🌐 现代浏览器</h5>
+        <div class="tech-item tech-target">Chrome / Edge</div>
+        <div class="tech-item tech-target">Standard Web APIs</div>
+        <div class="tech-item tech-target">JSP标准表达式</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== CASE STUDY ===== -->
+<section class="section section-deeper" id="case">
+  <div class="container">
+    <div class="section-label reveal">PROVEN RESULTS</div>
+    <h2 class="section-title reveal">实测算例：<span class="highlight">收付费系统</span>改造数据</h2>
+    <p class="section-desc reveal">
+      平台已在真实保险核心系统上完成验证。以下为某保险收付费系统的实测数据：
+    </p>
+    <div class="metrics-grid reveal">
+      <div class="metric-card">
+        <div class="metric-icon">📁</div>
+        <div class="metric-value" data-target="5630">0</div>
+        <div class="metric-label">Java源文件总量</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">📊</div>
+        <div class="metric-value" data-target="262">0</div>
+        <div class="metric-label">业务实体数量</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">🔗</div>
+        <div class="metric-value" data-target="4746">0</div>
+        <div class="metric-label">DBManager调用点</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-icon">⚡</div>
+        <div class="metric-value" data-target="35">0</div>
+        <div class="metric-label">% 整体效率提升</div>
+      </div>
+      <div class="metric-card metric-highlight">
+        <div class="metric-icon">🚀</div>
+        <div class="metric-value" data-target="91">0</div>
+        <div class="metric-label">% 功能点改造提效</div>
+      </div>
+    </div>
+
+    <div class="ba-container reveal" style="margin-top:48px;">
+      <div class="ba-col ba-before">
+        <h4>🔴 传统方式</h4>
+        <div class="ba-item">分析阶段：2-3周（人工梳理）</div>
+        <div class="ba-item">编码阶段：逐文件手工改造</div>
+        <div class="ba-item">审核阶段：依赖人工经验Review</div>
+        <div class="ba-item">知识沉淀：随人员流动而流失</div>
+        <div class="ba-item">总投入：约 1,654 人天</div>
+      </div>
+      <div class="ba-divider">VS</div>
+      <div class="ba-col ba-after">
+        <h4>🟢 AI驱动方式</h4>
+        <div class="ba-item">分析阶段：1-2小时（自动扫描+交互确认）</div>
+        <div class="ba-item">编码阶段：规则驱动批量自动化生成</div>
+        <div class="ba-item">审核阶段：5轮自动化+人工补充审核</div>
+        <div class="ba-item">知识沉淀：规则库持续进化，越用越强</div>
+        <div class="ba-item">总投入：约 1,070 人天（<b>-35%</b>，持续优化中）</div>
+        <div class="ba-item" style="color:var(--accent-amber);font-weight:600;">⭐ 功能点改造：450人天 → 38人天（<b>提效91%</b>）</div>
+      </div>
+    </div>
+
+    <div class="metric-footnote reveal">
+      💡 说明：目前主要针对<strong>代码层面的功能点改造</strong>（DB层、BL层、JSP、配置等）做了完整实验，该部分<strong style="color:#f59e0b;">提效高达91%</strong>。对于"拆接口、改存储过程"等跨系统协调工作仍按传统方式评估，因此整体提效约为35%。<strong>随着接口拆分和存储过程迁移技能持续成熟，整体提效仍有巨大上升空间</strong> 🚀
+    </div>
+  </div>
+</section>
+
+<!-- ===== DIFFERENTIATORS ===== -->
+<section class="section section-dark" id="diff">
+  <div class="container">
+    <div class="section-label reveal">WHY CHOOSE US</div>
+    <h2 class="section-title reveal">核心<span class="highlight">差异化优势</span></h2>
+    <p class="section-desc reveal">
+      相比传统AI编码辅助工具，本平台是专为保险行业信创改造场景深度定制的完整解决方案。
+    </p>
+    <div class="diff-grid reveal">
+      <div class="diff-card">
+        <h4>🎯 SPEC先行模式</h4>
+        <p>先分析→出方案→再编码，而非直接改代码。方向纠偏成本降低10倍。每一步产出文档（WIKI、方案、清单、WBS），全程可追溯、可审计。</p>
+      </div>
+      <div class="diff-card">
+        <h4>💬 结构化交互决策</h4>
+        <p>关键决策点使用按键选择而非自由文本输入。预设选项+兜底"其他"选项，确保AI不跑偏，决策有记录。每项必含"其他"选项——这是平台铁律。</p>
+      </div>
+      <div class="diff-card">
+        <h4>🧬 知识资产沉淀</h4>
+        <p>25条规则随项目实践"生长"。每完成一个系统，规则库就更强大——解决了一个系统的20%差异，为下一个系统积累了经验。是真正的可进化平台。</p>
+      </div>
+      <div class="diff-card">
+        <h4>📐 渐进式加载设计</h4>
+        <p>三级加载机制避免上下文过载：L1始终在线（概览），L2按需触发（技能详情），L3精确引用（规则/脚本/模板）。既保证覆盖面，又维持高效率。</p>
+      </div>
+      <div class="diff-card">
+        <h4>🔄 双路径工作模式</h4>
+        <p>遗留源码只读，改造产物在新项目目录生成。永不触碰原始代码——这是安全底线，确保生产环境的绝对安全。</p>
+      </div>
+      <div class="diff-card">
+        <h4>📋 7条操作铁律</h4>
+        <p>暴露假设、主动管理困惑、必要时刻直言问题、强制简洁、严守范围、验证而非假设、编码一致——七大硬约束确保交付质量，杜绝AI幻觉和范围蔓延。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== VALUE ===== -->
+<section class="section section-deeper">
+  <div class="container">
+    <div class="section-label reveal">CLIENT VALUE</div>
+    <h2 class="section-title reveal">为客户带来<span class="highlight">什么价值</span>？</h2>
+    <div class="value-cards reveal">
+      <div class="value-card">
+        <div class="v-icon">⏱️</div>
+        <div class="v-stat">91%</div>
+        <h4>效率提升</h4>
+        <p>代码层面功能点改造提效达<b>91%</b>（450人天→38人天）。分析阶段从2-3周压缩至1-2小时。整体项目提效35%+，且随着接口拆分等能力完善，提升空间巨大。</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">🛡️</div>
+        <div class="v-stat">5轮</div>
+        <h4>质量保障</h4>
+        <p>五轮审核机制+8个验证脚本+25条规则引擎，确保每一行改造代码都经过自动化验证，杜绝遗漏和错误。</p>
+      </div>
+      <div class="value-card">
+        <div class="v-icon">🧠</div>
+        <div class="v-stat">80%</div>
+        <h4>知识复用</h4>
+        <p>80%共性模式一次沉淀、N次复用。每个项目都在丰富知识库，形成不断进化的企业级信创改造资产。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer class="footer" id="footer">
+  <div class="container">
+    <div class="logo-text">ITAI Agent Skills — 信创改造智能体平台</div>
+    <p>中科软科技股份有限公司 · 金融保险五部</p>
+    <div class="contact">
+      <span class="contact-item">刘明星</span>
+      <a href="mailto:liumingxing@sinosoft.com.cn" class="contact-item">liumingxing@sinosoft.com.cn</a>
+      <span class="contact-item">18043068812</span>
+      <span class="contact-item">v2.1.0 · 2026-05</span>
+    </div>
+    <p style="margin-top:24px;font-size:0.75rem;color:var(--text-muted);">
+      基于 Rule / Skill / Agent / Validation 四层架构 · 面向保险行业信创改造场景 · AI驱动 · 知识资产沉淀
+    </p>
+  </div>
+</footer>
+
+<script>
+// === PARTICLE BACKGROUND ===
+(function() {
+  const canvas = document.getElementById('particles-canvas');
+  const ctx = canvas.getContext('2d');
+  let w, h, particles = [];
+
+  function resize() {
+    w = canvas.width = window.innerWidth;
+    h = canvas.height = window.innerHeight;
+  }
+  resize();
+  window.addEventListener('resize', resize);
+
+  class Particle {
+    constructor() {
+      this.reset();
+      this.y = Math.random() * h;
+    }
+    reset() {
+      this.x = Math.random() * w;
+      this.y = -10;
+      this.size = Math.random() * 2 + 0.5;
+      this.speed = Math.random() * 0.4 + 0.1;
+      this.opacity = Math.random() * 0.5 + 0.1;
+    }
+    update() {
+      this.y += this.speed;
+      if (this.y > h + 10) this.reset();
+    }
+    draw() {
+      ctx.beginPath();
+      ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(59,130,246,${this.opacity})`;
+      ctx.fill();
+    }
+  }
+
+  for (let i = 0; i < 60; i++) particles.push(new Particle());
+
+  function animate() {
+    ctx.clearRect(0, 0, w, h);
+    particles.forEach(p => { p.update(); p.draw(); });
+    requestAnimationFrame(animate);
+  }
+  animate();
+})();
+
+// === SCROLL REVEAL ===
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -50px 0px' });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+})();
+
+// === NAVIGATION DOTS ===
+(function() {
+  const dots = document.querySelectorAll('.nav-dot');
+  const sections = [...document.querySelectorAll('section[id]'), document.getElementById('footer')];
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        dots.forEach(d => {
+          d.classList.toggle('active', d.dataset.section === id);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  sections.forEach(s => observer.observe(s));
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = document.getElementById(dot.dataset.section);
+      if (target) target.scrollIntoView({ behavior: 'smooth' });
+    });
+  });
+})();
+
+// === SKILLS TABS ===
+(function() {
+  const tabs = document.querySelectorAll('.skills-tab');
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      document.querySelectorAll('.skills-panel').forEach(p => p.classList.remove('active'));
+      document.getElementById('panel-' + tab.dataset.panel).classList.add('active');
+    });
+  });
+})();
+
+// === COUNTER ANIMATION ===
+(function() {
+  const counters = document.querySelectorAll('.metric-value[data-target]');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const el = entry.target;
+        const target = parseInt(el.dataset.target);
+        const duration = 2000;
+        const start = performance.now();
+
+        function update(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          const eased = 1 - Math.pow(1 - progress, 3);
+          el.textContent = Math.round(target * eased).toLocaleString();
+          if (progress < 1) requestAnimationFrame(update);
+          // For percentage, add %
+          if (el.parentElement.querySelector('.metric-label').textContent.includes('%')) {
+            el.textContent = Math.round(target * eased) + '%';
+          }
+        }
+
+        requestAnimationFrame(update);
+        observer.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(c => observer.observe(c));
+})();
+
+// === INITIAL REVEAL FOR HERO ===
+setTimeout(() => {
+  document.querySelector('.hero .reveal')?.classList.add('visible');
+}, 200);
+</script>
+
+</body>
+</html>

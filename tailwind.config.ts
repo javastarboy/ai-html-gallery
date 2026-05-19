@@ -97,11 +97,17 @@ const config: Config = {
         "glow-secondary": "0 0 20px rgba(245, 158, 11, 0.3)",
       },
       animation: {
-        "fade-in": "fadeIn 0.3s ease-out",
-        "slide-up": "slideUp 0.3s ease-out",
-        "scale-in": "scaleIn 0.3s ease-out",
+        "fade-in": "fadeIn 0.3s ease-out forwards",
+        "slide-up": "slideUp 0.4s ease-out forwards",
+        "scale-in": "scaleIn 0.3s ease-out forwards",
         pulse: "pulse 2s cubic-bezier(0.4, 0, 0.6, 1) infinite",
         shimmer: "shimmer 2s infinite",
+        "stagger-in": "staggerIn 0.5s ease-out forwards",
+        "float": "float 6s ease-in-out infinite",
+        "glow-pulse": "glowPulse 3s ease-in-out infinite",
+        "aurora-drift": "auroraDrift 20s ease-in-out infinite alternate",
+        "aurora-drift2": "auroraDrift2 25s ease-in-out infinite alternate-reverse",
+        "card-enter": "cardEnter 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards",
       },
       keyframes: {
         fadeIn: {
@@ -109,7 +115,7 @@ const config: Config = {
           "100%": { opacity: "1" },
         },
         slideUp: {
-          "0%": { transform: "translateY(10px)", opacity: "0" },
+          "0%": { transform: "translateY(20px)", opacity: "0" },
           "100%": { transform: "translateY(0)", opacity: "1" },
         },
         scaleIn: {
@@ -119,6 +125,30 @@ const config: Config = {
         shimmer: {
           "0%": { backgroundPosition: "-1000px 0" },
           "100%": { backgroundPosition: "1000px 0" },
+        },
+        staggerIn: {
+          "0%": { transform: "translateY(30px) scale(0.95)", opacity: "0" },
+          "100%": { transform: "translateY(0) scale(1)", opacity: "1" },
+        },
+        float: {
+          "0%, 100%": { transform: "translateY(0)" },
+          "50%": { transform: "translateY(-8px)" },
+        },
+        glowPulse: {
+          "0%, 100%": { boxShadow: "0 0 10px rgba(99, 102, 241, 0.15)" },
+          "50%": { boxShadow: "0 0 20px rgba(99, 102, 241, 0.3)" },
+        },
+        auroraDrift: {
+          "0%": { transform: "translate(0, 0) rotate(0deg)" },
+          "100%": { transform: "translate(5%, 3%) rotate(2deg)" },
+        },
+        auroraDrift2: {
+          "0%": { transform: "translate(0, 0) rotate(0deg)" },
+          "100%": { transform: "translate(-3%, -5%) rotate(-2deg)" },
+        },
+        cardEnter: {
+          "0%": { transform: "translateY(40px) scale(0.9)", opacity: "0" },
+          "100%": { transform: "translateY(0) scale(1)", opacity: "1" },
         },
       },
       backdropBlur: {

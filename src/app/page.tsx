@@ -4,5 +4,5 @@ import HomeClient from './HomeClient';
 export default async function Home() {
   const [files, tags] = await Promise.all([getAllHtmlFiles(), getAllTags()]);
 
-  return <HomeClient initialFiles={files} initialTags={tags} />;
+  return <HomeClient files={files} allTags={tags} />;
 }

@@ -1,49 +1,52 @@
 'use client';
 
-import { useState, useMemo } from 'react';
-import Header from '@/components/layout/header';
-import Footer from '@/components/layout/footer';
+import { useState, useEffect } from 'react';
+import { HtmlFile, Source, SortOption } from '@/types';
 import Hero from '@/components/gallery/hero';
 import FilterBar from '@/components/gallery/filter-bar';
 import FileGrid from '@/components/gallery/file-grid';
 import Sidebar from '@/components/layout/sidebar';
-import { HtmlFile, Source, SortOption } from '@/types';
 
 interface HomeClientProps {
-  initialFiles: HtmlFile[];
-  initialTags: string[];
+  files: HtmlFile[];
+  allTags: string[];
 }
 
-export default function HomeClient({ initialFiles, initialTags }: HomeClientProps) {
+export default function HomeClient({ files, allTags }: HomeClientProps) {
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedSources, setSelectedSources] = useState<Source[]>([]);
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [sortOption, setSortOption] = useState<SortOption>('newest');
-  const [showSidebar, setShowSidebar] = useState(true);
+  const [showFilters, setShowFilters] = useState(true);
 
-  const filteredFiles = useMemo(() => {
-    let result = [...initialFiles];
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key === 'k') {
+        e.preventDefault();
+        document.querySelector<HTMLInputElement>('input[placeholder="搜索文件..."]')?.focus();
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, []);
 
-    if (searchQuery) {
-      const query = searchQuery.toLowerCase();
-      result = result.filter(
-        file =>
-          file.title.toLowerCase().includes(query) ||
-          file.description?.toLowerCase().includes(query) ||
-          file.tags.some(tag => tag.toLowerCase().includes(query)) ||
-          file.filename.toLowerCase().includes(query)
-      );
-    }
+  const filteredFiles = files
+    .filter(file => {
+      const matchesSearch =
+        !searchQuery ||
+        file.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (file.description && file.description.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        file.tags.some(tag => tag.toLowerCase().includes(searchQuery.toLowerCase()));
 
-    if (selectedSources.length > 0) {
-      result = result.filter(file => selectedSources.includes(file.source as Source));
-    }
+      const matchesSource =
+        selectedSources.length === 0 || selectedSources.includes(file.source as Source);
 
-    if (selectedTags.length > 0) {
-      result = result.filter(file => selectedTags.some(tag => file.tags.includes(tag)));
-    }
+      const matchesTags =
+        selectedTags.length === 0 || selectedTags.some(tag => file.tags.includes(tag));
 
-    result.sort((a, b) => {
+      return matchesSearch && matchesSource && matchesTags;
+    })
+    .sort((a, b) => {
       switch (sortOption) {
         case 'newest':
           return new Date(b.created).getTime() - new Date(a.created).getTime();
@@ -58,51 +61,47 @@ export default function HomeClient({ initialFiles, initialTags }: HomeClientProp
       }
     });
 
-    return result;
-  }, [initialFiles, searchQuery, selectedSources, selectedTags, sortOption]);
-
-  const uniqueSources = Array.from(new Set(initialFiles.map(f => f.source)));
+  const uniqueSources = Array.from(new Set(files.map(f => f.source)));
+  const totalFiles = files.length;
 
   return (
-    <div className="min-h-screen flex flex-col">
-      <Header searchQuery={searchQuery} onSearchChange={setSearchQuery} />
+    <div className="min-h-screen relative">
+      <div className="aurora-bg" />
 
-      <main className="flex-1 container mx-auto px-4 py-8">
-        <Hero
-          totalFiles={initialFiles.length}
-          totalSources={uniqueSources.length}
-          searchQuery={searchQuery}
-          onSearchChange={setSearchQuery}
+      <Hero
+        totalFiles={totalFiles}
+        totalSources={uniqueSources.length}
+        searchQuery={searchQuery}
+        onSearchChange={setSearchQuery}
+      />
+
+      <div className="container mx-auto px-4 pb-8 relative z-10">
+        <FilterBar
+          selectedSources={selectedSources}
+          onSourceChange={setSelectedSources}
+          sortOption={sortOption}
+          onSortChange={setSortOption}
+          showFilters={showFilters}
+          onToggleFilters={() => setShowFilters(!showFilters)}
         />
 
-        <div className="flex flex-col lg:flex-row gap-6">
-          {showSidebar && (
+        <div className="flex gap-6">
+          {showFilters && (
             <Sidebar
               selectedSources={selectedSources}
               onSourceChange={setSelectedSources}
-              tags={initialTags}
+              tags={allTags}
               selectedTags={selectedTags}
               onTagChange={setSelectedTags}
               totalFiles={filteredFiles.length}
             />
           )}
 
-          <div className="flex-1">
-            <FilterBar
-              selectedSources={selectedSources}
-              onSourceChange={setSelectedSources}
-              sortOption={sortOption}
-              onSortChange={setSortOption}
-              showFilters={showSidebar}
-              onToggleFilters={() => setShowSidebar(!showSidebar)}
-            />
-
+          <div className="flex-1 min-w-0">
             <FileGrid files={filteredFiles} />
           </div>
         </div>
-      </main>
-
-      <Footer />
+      </div>
     </div>
   );
 }
